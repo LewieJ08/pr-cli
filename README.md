@@ -27,12 +27,12 @@ Link the CLI globally:
 npm link
 ```
 
-Commands (as of now):
+Run the PR command 
 
 ```bash
 # pr-cli main command
 pr 
 
-# developer mode
-npm run dev
+# pr help command
+pr -h 
 ```

@@ -1,7 +1,7 @@
 {
   "name": "pr-cli",
   "version": "1.0.0",
-  "description": "",
+  "description": "a simple CLI to create and manage pull requests",
   "main": "index.js",
   "type": "commonjs",
   "bin": {
@@ -20,6 +20,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "commander": "^14.0.2"
+    "commander": "^14.0.2",
+    "dotenv": "^17.2.3"
   }
 }
