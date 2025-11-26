@@ -5,7 +5,10 @@ async function createPullRequest(): Promise<void> {
     try {
         const response = await fetch(`${API_BASE}/${OWNER}/${REPO}/pulls`, {
             method: 'POST',
-            headers: {'X-GitHub-Api-Version': '2022-11-28'}
+            headers: {
+                'X-GitHub-Api-Version': '2022-11-28',
+                'Authorization': `Bearer ${TOKEN}`
+            }
         });
 
         const data = await response.json()
