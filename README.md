@@ -2,6 +2,36 @@
 
 A tool that allows users to create and manage pull requests from the command line
 
+## Features
+- List pull requests
+- Create a pull request
+
+#### Features Coming
+
+>- Get a pull request
+>- Update a pull request
+>- List commits on a pull request
+>- List pull requests files
+>- Check if a pull request has been merged
+>- Merge a pull request
+>- Update a pull request branch
+
+
+## Architecture 
+
+```
+pr-cli/
+├── bin/
+├── src/
+│   ├── commands/
+│   ├── config/
+│   └── index.ts
+├── package.json
+├── README.md
+└── tsconfig.json
+```
+
+
 ## Installation
 
 Clone the repository:
@@ -27,12 +57,15 @@ Link the CLI globally:
 npm link
 ```
 
+## Usage
+
 Run the PR command 
 
 ```bash
-# pr-cli main command
-pr 
 
 # pr help command
 pr -h 
+
+# pr-cli DEV MODE
+npm run dev
 ```
