@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "description": "a simple CLI to create and manage pull requests",
   "main": "index.js",
-  "type": "commonjs",
   "bin": {
     "pr": "./bin/pr.js"
   },
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node src/index.ts"
+    "dev": "ts-node src/dev/devMode.ts"
   },
   "keywords": [],
   "author": "",
