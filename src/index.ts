@@ -2,10 +2,9 @@ import { Command } from "commander";
 import listPullRequests from "./commands/list";
 import createPullRequest from "./commands/create";
 
-export const program = new Command();        
+export const program = new Command('pr');        
 
 program 
-    .name('pr')
     .description('A cli tool that allows users to create and manage pull requests')
     .option('-l, --list', 'List pull requests')
     .option('-c, --create', 'Create a pull request')
