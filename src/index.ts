@@ -6,11 +6,24 @@ export const program = new Command('pr');
 
 program 
     .description('A cli tool that allows users to create and manage pull requests')
-    .option('-l, --list', 'List pull requests')
-    .option('-c, --create', 'Create a pull request')
+    .version('1.0.0')
+    .action(() => {
+        program.outputHelp();
+    })
 
-program.parse(process.argv);
-const options = program.opts();
+program
+    .command('list')
+    .description('List pull requests')
+    .action(() => {
+        listPullRequests();
+    })
 
-if (options.list) listPullRequests();
-if (options.create) createPullRequest();
+program
+    .command('create')
+    .description('Create a pull request')
+    .action(() => {
+        createPullRequest();
+    })
+
+
+program.parse();
