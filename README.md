@@ -25,7 +25,7 @@ pr-cli/
 ├── src/
 │   ├── commands/
 │   ├── config/
-│   ├── dev/
+│   ├── utils/
 │   └── index.ts
 ├── package.json
 ├── README.md
