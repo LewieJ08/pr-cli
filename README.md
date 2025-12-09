@@ -63,10 +63,9 @@ npm link
 Run the PR command 
 
 ```bash
+# main pr command
+pr <command>
 
-# pr help command
-pr -h 
-
-# pr-cli DEV MODE
-npm run dev
+# dev script
+npm run dev <command>
 ```
