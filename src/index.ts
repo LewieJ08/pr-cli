@@ -1,8 +1,8 @@
 import { Command } from "commander";
-import listPullRequests from "./commands/list";
-import createPullRequest from "./commands/create";
+import list from "./commands/list";
+import create from "./commands/create";
 
-export const program = new Command('pr');        
+const program = new Command('pr');        
 
 program 
     .description('A cli tool that allows users to create and manage pull requests')
@@ -15,14 +15,14 @@ program
     .command('list')
     .description('List pull requests')
     .action(() => {
-        listPullRequests();
+        list();
     })
 
 program
     .command('create')
     .description('Create a pull request')
     .action(() => {
-        createPullRequest();
+        create();
     })
 
 

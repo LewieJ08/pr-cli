@@ -1,27 +1,13 @@
-import { REPO, OWNER, TOKEN } from "../config/env";
-import { API_BASE } from "../config/consts";
+import createPullRequest from "../services/githubService";
+import { prompt } from "../utils/prompt";
 
-async function createPullRequest(): Promise<void> {
-    try {
-        const response = await fetch(`${API_BASE}/${OWNER}/${REPO}/pulls`, {
-            method: 'POST',
-            headers: {
-                'X-GitHub-Api-Version': '2022-11-28',
-                'Authorization': `Bearer ${TOKEN}`
-            }
-        });
+async function create(): Promise<void> {
+    const title = await prompt('title > ');
+    const body = await prompt('body > ');
+    const head = await prompt('head > ');
+    const base = await prompt('base > ');
 
-        const data = await response.json()
-
-        if (!response.ok) {
-            throw new Error (`${response.status}`);
-        }
-
-        console.log(data);
-
-    } catch(error: unknown) {
-        throw error
-    }
+    await createPullRequest(title, body, head, body);
 }
 
-export default createPullRequest;
+export default create;
