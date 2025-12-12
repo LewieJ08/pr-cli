@@ -4,7 +4,7 @@
   "description": "a simple CLI to create and manage pull requests",
   "main": "index.js",
   "bin": {
-    "pr": "./bin/pr.js"
+    "pr": "bin/pr.js"
   },
   "scripts": {
     "build": "tsc",
