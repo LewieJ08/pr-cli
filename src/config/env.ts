@@ -1,6 +1,5 @@
 import { configDotenv } from "dotenv";
 configDotenv({quiet: true});
 
-export const REPO = process.env.REPO || undefined;
-export const OWNER = process.env.OWNER || undefined;
+// GitHub api token
 export const TOKEN = process.env.TOKEN || undefined;
