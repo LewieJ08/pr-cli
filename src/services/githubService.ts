@@ -1,63 +1,39 @@
-import { REPO, OWNER, TOKEN } from "../config/env";
+export interface GithubServiceConfig {
+    token: string;
+    owner: string;
+    repo: string;
+}
 
-const API_BASE = `https://api.github.com/repos/${OWNER}/${REPO}`;
+export class GithubService {
+    private readonly baseUrl: string;
 
-// List pull requests
-export async function listPullRequests(): Promise<void> {
-    try {
-        const response = await fetch(`${API_BASE}/${OWNER}/${REPO}/pulls`, {
-            method: 'GET',
-            headers: {'X-GitHub-Api-Version': '2022-11-28'}
+    constructor(private readonly config: GithubServiceConfig) {
+        this.baseUrl = `https://api.github.com/repos/${config.owner}/${config.repo}`;
+    }
+
+    // Make request to github api
+    private async request<T>(path: string, options: RequestInit): Promise<T> {
+        const response = await fetch(`${this.baseUrl}${path}`, {
+            ...options,
+            headers: {
+                'X-GitHub-Api-Version': '2022-11-28',
+                'Authorization': `Bearer ${this.config.token}`,
+                'Accept': 'application/vnd.github+json',
+                ...options.headers
+            },
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(`${response.status}`);
+            throw new Error(`GitHub API error ${response.status}: ${data?.message ?? 'Unknown error'}`)
         }
+        
+        return data
+    }
 
-        console.log(data)
-
-    } catch(error: unknown) {
-        throw error;
+    // List pull requests
+    public listPullRequests() {
+        return this.request('/pulls', {method: 'GET'});
     }
 }
-
-// Create a pull request
-export async function createPullRequest(
-    title: string, 
-    body: string, 
-    head: string, 
-    base: string
-): Promise<void> {
-    try {
-        const response = await fetch(`${API_BASE}/pulls`, {
-            method: 'POST',
-            headers: {
-                'X-GitHub-Api-Version': '2022-11-28',
-                'Authorization': `Bearer ${TOKEN}`,
-                'Accept': 'application/vnd.github+json',
-                'Content': 'application/json'
-            },
-            body: JSON.stringify({
-                title: title,
-                body: body,
-                head: head,
-                base: base
-            })
-        });
-
-        const data = await response.json()
-
-        if (!response.ok) {
-            throw new Error (`${response.status}`);
-        }
-
-        console.log(data);
-
-    } catch(error: unknown) {
-        throw error
-    }
-}
-
-export default createPullRequest;
