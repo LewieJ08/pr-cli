@@ -7,14 +7,14 @@ interface ParsedUrlItems {
 
 export class NoGitRepoError extends Error {
     constructor() {
-        super('Not a repository');
+        super('pr: Not a git repository');
         this.name = 'NoGitRepoError';
     }
 }
 
 export class InvalidRemoteUrlError extends Error {
     constructor() {
-        super('Invalid Remote Git URL');
+        super('pr: Invalid Remote Git URL');
         this.name = 'InvalidRemoteUrlError';
     }
 }
