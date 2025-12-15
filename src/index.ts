@@ -1,6 +1,6 @@
 import { Command } from "commander";
-import list from "./commands/list";
-import create from "./commands/create";
+import listCommand from "./commands/list";
+import createCommand from "./commands/create";
 
 const program = new Command('pr');        
 
@@ -15,14 +15,14 @@ program
     .command('list')
     .description('List pull requests')
     .action(() => {
-        list();
+        listCommand();
     })
 
 program
     .command('create')
     .description('Create a pull request')
     .action(() => {
-        create();
+        createCommand();
     })
 
 
