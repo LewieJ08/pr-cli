@@ -11,5 +11,5 @@ export function resolveGitContext():  GitContext {
     const remoteUrl = getRemoteUrl();
     const { owner, repo } = parseRemoteUrl(remoteUrl);
 
-    return {head, owner, repo}
+    return { head, owner, repo };
 }
