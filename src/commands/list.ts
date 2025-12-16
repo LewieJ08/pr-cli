@@ -6,7 +6,11 @@ import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils";
 async function listCommand(): Promise<void> {
     try {
         const { owner, repo } = resolveGitContext();
-        const github = new GithubService({token: TOKEN, owner: owner, repo: repo});
+        const github = new GithubService({
+            token: TOKEN, 
+            owner: owner, 
+            repo: repo
+        });
 
         const pullRequests = await github.listPullRequests();
         console.log(pullRequests);
