@@ -1,3 +1,5 @@
+import { Repository } from "./types";
+
 export interface GithubServiceConfig {
     token: string;
     owner: string;
@@ -32,8 +34,27 @@ export class GithubService {
         return data
     }
 
+    // Get repository
+    public getRepository(): Promise<Repository>{
+        return this.request<Repository>('', {method: 'GET'});     
+    }
+
     // List pull requests
     public listPullRequests() {
         return this.request('/pulls', {method: 'GET'});
+    }
+
+    // Create a pull request
+    public createPullRequest(
+        title: string,
+        body: string,
+        head: string,
+        base: string,
+    ) {
+        return this.request('/pulls', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ title, body, head, base })
+        })
     }
 }
