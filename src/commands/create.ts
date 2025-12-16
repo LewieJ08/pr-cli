@@ -1,13 +1,43 @@
-import createPullRequest from "../services/githubService";
+import { TOKEN } from "../config/env";
+import { GithubService } from "../services/githubService";
 import { prompt } from "../utils/prompt";
+import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils";
+import { resolveGitContext } from "../utils/gitContext";
 
-async function create(): Promise<void> {
-    const title = await prompt('title > ');
-    const body = await prompt('body > ');
-    const head = await prompt('head > ');
-    const base = await prompt('base > ');
+async function createCommand(): Promise<void> {
+    try {
+        const context = resolveGitContext();
+        
+        const github = new GithubService({
+            token: TOKEN, 
+            owner: context.owner, 
+            repo: context.repo
+        });
 
-    await createPullRequest(title, body, head, body);
+        const repo = await github.getRepository();
+        const title = await prompt('title > ');
+        const body = await prompt('body >');
+
+        github.createPullRequest(
+            title, 
+            body, 
+            context.head,
+            repo.default_branch
+        );
+
+    } catch (error) {
+        if (error instanceof NoGitRepoError) {
+            console.log(error.message);
+            process.exit(1);
+        }
+
+        if (error instanceof InvalidRemoteUrlError) {
+            console.log(error.message);
+            process.exit(1);
+        }
+        
+        throw error;
+    }
 }
 
-export default create;
+export default createCommand;
