@@ -1,16 +1,11 @@
 import { configDotenv } from "dotenv";
 configDotenv({quiet: true});
 
-// fetch env vars
-function fetchEnvVar(name: string): string {
-    const value = process.env[name];
-
-    if (!value) {
-        console.log(`Missing required environment variable: ${name}`);
-        process.exit(1)
+// get github token env var
+export function resolveGithubToken(): string {
+    if (process.env.GITHUB_TOKEN) {
+        return process.env.GITHUB_TOKEN
     }
 
-    return value;
+    throw new Error("Missing Github Token Config. Please run 'pr auth login' to authenticate")
 }
-
-export const TOKEN = fetchEnvVar('TOKEN');

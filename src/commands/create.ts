@@ -1,15 +1,16 @@
-import { TOKEN } from "../config/env";
+import { resolveGithubToken } from "../config/env";
+import { resolveGitContext } from "../utils/gitContext";
 import { GithubService } from "../services/githubService";
 import { prompt } from "../utils/prompt";
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils";
-import { resolveGitContext } from "../utils/gitContext";
 
 async function createCommand(): Promise<void> {
     try {
         const context = resolveGitContext();
+        const token = resolveGithubToken();
         
         const github = new GithubService({
-            token: TOKEN, 
+            token: token, 
             owner: context.owner, 
             repo: context.repo
         });
