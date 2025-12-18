@@ -28,7 +28,7 @@ export async function saveConfig(token: string): Promise<TokenValidationResult> 
     }
     
     const configData = JSON.stringify({
-        GITHUB_TOKEN: token
+        githubToken: token
     });
 
     mkdirSync(CONFIG_DIR, {recursive: true})
@@ -38,5 +38,9 @@ export async function saveConfig(token: string): Promise<TokenValidationResult> 
 }
 
 export function clearConfig() {
-    // pass
+    const configData = JSON.stringify({
+        githubToken: null
+    });
+
+    writeFileSync(CONFIG_FILE, configData);
 }
