@@ -1,7 +1,8 @@
-import { resolveGithubToken } from "../config/env";
-import { resolveGitContext } from "../utils/gitContext";
-import { GithubService } from "../services/githubService";
-import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils";
+import { resolveGithubToken } from "../config/env.js";
+import { resolveGitContext } from "../utils/gitContext.js";
+import { GithubService } from "../services/githubService.js";
+import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js";
+import { logError } from "../utils/logger.js";
 
 async function listCommand(): Promise<void> {
     try {
@@ -18,12 +19,17 @@ async function listCommand(): Promise<void> {
         console.log(pullRequests);
     } catch (error) {
         if (error instanceof NoGitRepoError) {
-            console.log(error.message);
+            logError(error.message);
             process.exit(1);
         }
 
         if (error instanceof InvalidRemoteUrlError) {
-            console.log(error.message);
+            logError(error.message);
+            process.exit(1);
+        }
+
+        if (error instanceof Error) {
+            logError(error.message);
             process.exit(1);
         }
         

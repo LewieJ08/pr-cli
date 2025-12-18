@@ -1,11 +1,18 @@
 import { configDotenv } from "dotenv";
+import { loadConfig } from "./config.js";
 configDotenv({quiet: true});
 
-// get github token env var
+// get github token from .env or config file
 export function resolveGithubToken(): string {
-    if (process.env.GITHUB_TOKEN) {
-        return process.env.GITHUB_TOKEN
+    const envToken = process.env.GITHUB_TOKEN;
+    if (envToken) {
+        return envToken;
     }
 
-    throw new Error("Missing Github Token Config. Please run 'pr auth login' to authenticate")
+    const configToken =  loadConfig();
+    if (configToken) {
+        return configToken;
+    }
+
+    throw new Error("Missing Github Token Config. Please run 'pr auth' to authenticate")
 }

@@ -1,4 +1,4 @@
-import { getCurrentBranch, getRemoteUrl, parseRemoteUrl } from "./gitUtils";
+import { getCurrentBranch, getRemoteUrl, parseRemoteUrl } from "./gitUtils.js";
 
 interface GitContext {
   head: string;

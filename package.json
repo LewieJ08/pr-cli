@@ -3,19 +3,20 @@
   "version": "1.0.0",
   "description": "a simple CLI to create and manage pull requests",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "pr": "bin/pr.js"
   },
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node src/index.ts"
+    "dev": "tsx src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^24.10.0",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
