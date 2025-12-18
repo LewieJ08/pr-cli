@@ -9,7 +9,7 @@ export function prompt(query: string): Promise<string> {
 
         rl.question(query, answer => {
             rl.close();
-            resolve(answer)
+            resolve(answer.trim())
         });
     });
 }
