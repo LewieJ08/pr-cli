@@ -1,9 +1,13 @@
 import chalk from "chalk";
 
 export function logSuccess(message: string): void {
-    console.log(chalk.green(message));
+    console.log(chalk.green(`\n${message}`));
 }
 
 export function logError(message: string): void {
-    console.log(chalk.red(message));
+    console.log(chalk.red(`\n${message}`));
+}
+
+export function logInfo(message: string): void {
+    console.log(chalk.blue(`\n${message}`));
 }

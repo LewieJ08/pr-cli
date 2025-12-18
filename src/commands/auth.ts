@@ -1,6 +1,6 @@
 import { saveConfig, clearConfig } from "../config/config.js"
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js"; 
-import { logError, logSuccess } from "../utils/logger.js";
+import { logError, logSuccess, logInfo } from "../utils/logger.js";
 import { prompt } from "../utils/prompt.js";
 
 export interface AuthOptions{
@@ -11,6 +11,7 @@ export async function authCommand(options: AuthOptions) {
     try {
         if (options.delete) {
             clearConfig();
+            logInfo("Config cleared. See 'pr auth -h' for config options")
         } else {
             const token = await prompt('Github Token> ')
             const tokenData = await saveConfig(token);
