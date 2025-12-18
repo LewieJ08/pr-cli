@@ -1,8 +1,16 @@
 import { execSync } from "child_process";
+import { resolveGitContext } from "./gitContext.js";
+import { GithubService } from "../services/githubService.js";
 
 interface ParsedUrlItems {
     owner: string;
     repo: string;
+}
+
+export interface TokenValidationResult {
+    valid: boolean;
+    reason?: string;
+    username?: string;
 }
 
 export class NoGitRepoError extends Error {
@@ -44,4 +52,32 @@ export function parseRemoteUrl(remoteUrl: string): ParsedUrlItems {
     }
 
     return { owner: match[1], repo: match[2] };
+}
+
+export async function validateGithubToken(token: string): Promise<TokenValidationResult> {
+    try {
+        const context = resolveGitContext();
+        const github = new GithubService({
+            token: token, 
+            owner: context.owner, 
+            repo: context.repo
+        });
+
+        const user = await github.getUser();
+
+        return {
+            valid: true,
+            username: user.login
+        }
+
+    } catch (error) {
+        if (error instanceof Error) {
+            return {
+                valid: false,
+                reason: error.message
+            }
+        }
+        
+        throw error;
+    }
 }

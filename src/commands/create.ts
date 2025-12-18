@@ -1,8 +1,9 @@
-import { resolveGithubToken } from "../config/env";
-import { resolveGitContext } from "../utils/gitContext";
-import { GithubService } from "../services/githubService";
-import { prompt } from "../utils/prompt";
-import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils";
+import { resolveGithubToken } from "../config/env.js";
+import { resolveGitContext } from "../utils/gitContext.js";
+import { GithubService } from "../services/githubService.js";
+import { prompt } from "../utils/prompt.js";
+import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js";
+import { logError, logSuccess } from "../utils/logger.js";
 
 async function createCommand(): Promise<void> {
     try {
@@ -26,14 +27,20 @@ async function createCommand(): Promise<void> {
             repo.default_branch
         );
 
+        logSuccess(`Pull Request for '${repo.name}' created successfully`);
     } catch (error) {
         if (error instanceof NoGitRepoError) {
-            console.log(error.message);
+            logError(error.message);
             process.exit(1);
         }
 
         if (error instanceof InvalidRemoteUrlError) {
-            console.log(error.message);
+            logError(error.message);
+            process.exit(1);
+        }
+
+        if (error instanceof Error) {
+            logError(error.message);
             process.exit(1);
         }
         

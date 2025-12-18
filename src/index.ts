@@ -1,7 +1,7 @@
 import { Command } from "commander";
-import listCommand from "./commands/list";
-import createCommand from "./commands/create";
-import { authCommand, AuthOptions } from "./commands/auth";
+import listCommand from "./commands/list.js";
+import createCommand from "./commands/create.js";
+import { authCommand, AuthOptions } from "./commands/auth.js";
 
 const program = new Command('pr');   
 
@@ -31,7 +31,7 @@ program
 program
     .command('auth')
     .description('Authenticate GitHub Token')
-    .option('-d, --delete', 'Delete GitHub token from config', false)
+    .option('-d, --delete', 'Delete GitHub token from config')
     .action((options: AuthOptions) => {
         authCommand(options);
     })

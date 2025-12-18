@@ -1,4 +1,4 @@
-import { Repository } from "./types";
+import { Repository, User } from "./types.js";
 
 export interface GithubServiceConfig {
     token: string;
@@ -8,9 +8,11 @@ export interface GithubServiceConfig {
 
 export class GithubService {
     private readonly baseUrl: string;
+    private readonly repoPath: string;
 
     constructor(private readonly config: GithubServiceConfig) {
-        this.baseUrl = `https://api.github.com/repos/${config.owner}/${config.repo}`;
+        this.baseUrl = `https://api.github.com`;
+        this.repoPath = `/repos/${config.owner}/${config.repo}`;
     }
 
     // Make request to github api
@@ -34,14 +36,19 @@ export class GithubService {
         return data
     }
 
+    // Get a User
+    public getUser(): Promise<User> {
+        return this.request<User>(`/user`, {method: 'GET'}) 
+    }
+
     // Get repository
     public getRepository(): Promise<Repository>{
-        return this.request<Repository>('', {method: 'GET'});     
+        return this.request<Repository>(this.repoPath, {method: 'GET'});     
     }
 
     // List pull requests
     public listPullRequests() {
-        return this.request('/pulls', {method: 'GET'});
+        return this.request(`${this.repoPath}/pulls`, {method: 'GET'});
     }
 
     // Create a pull request
@@ -51,7 +58,7 @@ export class GithubService {
         head: string,
         base: string,
     ) {
-        return this.request('/pulls', {
+        return this.request(`${this.repoPath}/pulls`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({ title, body, head, base })
