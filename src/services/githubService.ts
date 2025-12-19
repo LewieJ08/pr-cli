@@ -1,4 +1,4 @@
-import { Repository, User } from "./types.js";
+import { Repository, User, PullRequest } from "./types.js";
 
 export interface GithubServiceConfig {
     token: string;
@@ -47,8 +47,8 @@ export class GithubService {
     }
 
     // List pull requests
-    public listPullRequests() {
-        return this.request(`${this.repoPath}/pulls`, {method: 'GET'});
+    public listPullRequests(): Promise<PullRequest[]> {
+        return this.request<PullRequest[]>(`${this.repoPath}/pulls`, {method: 'GET'});
     }
 
     // Create a pull request
