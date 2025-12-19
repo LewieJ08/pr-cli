@@ -64,4 +64,9 @@ export class GithubService {
             body: JSON.stringify({ title, body, head, base })
         })
     }
+
+    // Get a pull request by pull number
+    public getPullRequest(pullNumber: number): Promise<PullRequest> {
+        return this.request<PullRequest>(`${this.repoPath}/pulls/${pullNumber}`, { method: 'GET' })
+    }
 }
