@@ -16,7 +16,12 @@ async function listCommand(): Promise<void> {
         });
 
         const pullRequests = await github.listPullRequests();
-        console.log(pullRequests);
+
+        for (const pullRequest of pullRequests) {
+            console.log(pullRequest.title)
+        }
+        
+
     } catch (error) {
         if (error instanceof NoGitRepoError) {
             logError(error.message);

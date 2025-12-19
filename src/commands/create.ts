@@ -20,7 +20,7 @@ async function createCommand(): Promise<void> {
         const title = await prompt('title > ');
         const body = await prompt('body > ');
 
-        github.createPullRequest(
+        await github.createPullRequest(
             title, 
             body, 
             context.head,
