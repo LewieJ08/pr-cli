@@ -5,10 +5,10 @@ A tool that allows users to create and manage pull requests from the command lin
 ## Features
 - List pull requests
 - Create a pull request
+- Get a pull request
 
 #### Features Coming
 
->- Get a pull request
 >- Update a pull request
 >- List commits on a pull request
 >- List pull requests files
@@ -66,6 +66,9 @@ Run the PR command
 ```bash
 # main pr command
 pr <command>
+
+# help command
+pr -h 
 
 # dev script
 npm run dev <command>
