@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import listCommand from "./commands/list.js";
 import createCommand from "./commands/create.js";
+import getCommand from "./commands/get.ts";
 import { authCommand, AuthOptions } from "./commands/auth.js";
 
 const program = new Command('pr');   
@@ -25,6 +26,13 @@ program
     .description('Create a pull request')
     .action(() => {
         createCommand();
+    })
+
+program 
+    .command('get')
+    .description('Get a pull request')
+    .action(() => {
+        getCommand();
     })
 
 // Auth command
