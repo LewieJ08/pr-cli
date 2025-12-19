@@ -2,7 +2,7 @@ import { resolveGithubToken } from "../config/env.js";
 import { resolveGitContext } from "../utils/gitContext.js";
 import { GithubService } from "../services/githubService.js";
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js";
-import { logError } from "../utils/logger.js";
+import { logError, logText, logWarn } from "../utils/logger.js";
 
 async function listCommand(): Promise<void> {
     try {
@@ -18,10 +18,13 @@ async function listCommand(): Promise<void> {
         const pullRequests = await github.listPullRequests();
 
         for (const pullRequest of pullRequests) {
-            console.log(pullRequest.title)
+            logWarn(`Pull Request #${pullRequest.number}  ${pullRequest.html_url}`, { bold: true })
+            console.log(`Author: ${pullRequest.user.login}`)
+            console.log(`Date: ${pullRequest.created_at}`)
+            console.log(`${pullRequest.head.ref} --> ${pullRequest.base.ref}`)
+            logText(`\n    ${pullRequest.title}\n`, { bold: true })
         }
-        
-
+    
     } catch (error) {
         if (error instanceof NoGitRepoError) {
             logError(error.message);
