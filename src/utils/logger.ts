@@ -1,17 +1,49 @@
-import chalk from "chalk";
+import chalk, { ChalkInstance } from "chalk";
 
-export function logSuccess(message: string): void {
-    console.log(chalk.green(`\n${message}`));
+interface LogOptions {
+    bold?: boolean;
+    dim?: boolean;
+    italic?: boolean;
+    underline?: boolean;
+    inverse?: boolean;
 }
 
-export function logError(message: string): void {
-    console.log(chalk.red(`\n${message}`));
+// Applies formatting options to base ChalkInstance
+function applyLogOptions(base: ChalkInstance, options?: LogOptions): ChalkInstance {
+    let style = base;
+
+    if (options?.bold) style = style.bold;
+    if (options?.dim) style = style.dim;
+    if (options?.italic) style = style.italic;
+    if (options?.underline) style = style.underline;
+    if (options?.inverse) style = style.inverse;
+
+    return style;
 }
 
-export function logInfo(message: string): void {
-    console.log(chalk.blue(`\n${message}`));
+// Main log function
+function log( message: string, base: ChalkInstance, options?: LogOptions ): void {
+    const chalkInstance = applyLogOptions(base, options);
+    console.log(chalkInstance(`${message}`));
 }
 
-export function logWarn(message: string): void {
-    console.log(chalk.yellow(`\n${message}`));
+// Public log functions
+export function logSuccess(message: string, options?: LogOptions): void {
+    log(message, chalk.green, options);
+}
+
+export function logError(message: string, options?: LogOptions): void {
+    log(message, chalk.red, options);
+}
+
+export function logInfo(message: string, options?: LogOptions): void {
+    log(message, chalk.blue, options);
+}
+
+export function logWarn(message: string, options?: LogOptions): void {
+    log(message, chalk.yellowBright, options);
+}
+
+export function logText(message: string, options?: LogOptions): void {
+    log(message, chalk, options);
 }

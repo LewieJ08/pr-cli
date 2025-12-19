@@ -1,6 +1,7 @@
 export interface User {
     id: number;
     login: string; // Username
+    email: string;
 }
 
 export interface Repository {
@@ -17,11 +18,11 @@ export interface PullRequest {
     number: number;
     title: string;
     user: User;
+    created_at: string;
     head: {
         ref: string;
     }
     base: {
         ref: string;
     }
-
 }
