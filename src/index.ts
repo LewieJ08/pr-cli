@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import listCommand from "./commands/list.js";
 import createCommand from "./commands/create.js";
-import getCommand from "./commands/get.ts";
+import getCommand from "./commands/get.js";
 import { authCommand, AuthOptions } from "./commands/auth.js";
 
 const program = new Command('pr');   
@@ -31,8 +31,9 @@ program
 program 
     .command('get')
     .description('Get a pull request')
-    .action(() => {
-        getCommand();
+    .argument('<number>', 'Pull request number')
+    .action((pullNumber: number) => {
+        getCommand(pullNumber);
     })
 
 // Auth command
