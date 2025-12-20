@@ -31,7 +31,7 @@ program
 program 
     .command('get')
     .description('Get a pull request')
-    .argument('<number>', 'Pull request number')
+    .argument('<pullNumber>', 'Pull request number')
     .action((pullNumber: number) => {
         getCommand(pullNumber);
     })
