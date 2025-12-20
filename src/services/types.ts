@@ -16,8 +16,10 @@ export interface PullRequest {
     id: number;
     html_url: string;
     number: number;
+    state: 'open' | 'closed';
     title: string;
     user: User;
+    body: string;
     created_at: string;
     head: {
         ref: string;
@@ -25,4 +27,5 @@ export interface PullRequest {
     base: {
         ref: string;
     }
+    merged: boolean;
 }
