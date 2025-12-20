@@ -16,13 +16,16 @@ async function listCommand(): Promise<void> {
         });
 
         const pullRequests = await github.listPullRequests();
-
+        
         for (const pullRequest of pullRequests) {
-            logWarn(`Pull Request #${pullRequest.number}  ${pullRequest.html_url}`, { bold: true })
-            console.log(`Author: ${pullRequest.user.login}`)
-            console.log(`Date: ${pullRequest.created_at}`)
-            console.log(`${pullRequest.head.ref} --> ${pullRequest.base.ref}`)
-            logText(`\n    ${pullRequest.title}\n`, { bold: true })
+            const mergeStatus = pullRequest.merged ? 'Merged' : 'Pending Merge';
+
+            logWarn(`Pull Request #${pullRequest.number} (${pullRequest.state}) ${pullRequest.html_url}`, { bold: true });
+            console.log(`${pullRequest.head.ref} --> ${pullRequest.base.ref} (${mergeStatus})`);
+            console.log(`Author: ${pullRequest.user.login}`);
+            console.log(`Date: ${pullRequest.created_at}`);
+
+            logText(`\n    ${pullRequest.title}\n`, { bold: true });
         }
     
     } catch (error) {

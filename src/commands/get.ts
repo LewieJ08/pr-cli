@@ -16,13 +16,16 @@ async function getCommand(pullNumber: number): Promise<void> {
         });
 
         const pullRequest = await github.getPullRequest(pullNumber);
+        const mergeStatus = pullRequest.merged ? 'Merged' : 'Pending Merge'
 
         // Display pull request data in clean format
-        logWarn(`Pull Request #${pullRequest.number}  ${pullRequest.html_url}`, { bold: true });
+        logWarn(`Pull Request #${pullRequest.number} (${pullRequest.state}) ${pullRequest.html_url}`, { bold: true });
+        console.log(`${pullRequest.head.ref} --> ${pullRequest.base.ref} (${mergeStatus})`);
         console.log(`Author: ${pullRequest.user.login}`);
         console.log(`Date: ${pullRequest.created_at}`);
-        console.log(`${pullRequest.head.ref} --> ${pullRequest.base.ref}`);
+
         logText(`\n    ${pullRequest.title}\n`, { bold: true });
+        console.log(`    ${pullRequest.body}\n`);
 
     } catch (error) {   
         if (error instanceof NoGitRepoError) {
