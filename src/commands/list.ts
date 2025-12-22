@@ -2,7 +2,8 @@ import { resolveGithubToken } from "../config/env.js";
 import { resolveGitContext } from "../utils/gitContext.js";
 import { GithubService } from "../services/githubService.js";
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js";
-import { logError, logText, logWarn } from "../utils/logger.js";
+import { logError, logWarn } from "../utils/logger.js";
+import { info } from "../utils/color.js";
 
 async function listCommand(): Promise<void> {
     try {
@@ -20,12 +21,12 @@ async function listCommand(): Promise<void> {
         for (const pullRequest of pullRequests) {
             const mergeStatus = pullRequest.merged ? 'Merged' : 'Pending Merge';
 
-            logWarn(`Pull Request #${pullRequest.number} (${pullRequest.state}) ${pullRequest.html_url}`, { bold: true });
-            console.log(`${pullRequest.head.ref} --> ${pullRequest.base.ref} (${mergeStatus})`);
+            logWarn(`Pull Request #${pullRequest.number} (${pullRequest.state}) ${pullRequest.html_url}`);
+            console.log(`${info(mergeStatus)} ${pullRequest.base.ref} <- ${pullRequest.head.ref}`);
             console.log(`Author: ${pullRequest.user.login}`);
             console.log(`Date: ${pullRequest.created_at}`);
 
-            logText(`\n    ${pullRequest.title}\n`, { bold: true });
+            console.log(`\n    ${pullRequest.title}\n`);
         }
     
     } catch (error) {

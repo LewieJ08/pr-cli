@@ -1,5 +1,6 @@
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js"
-import { logError, logWarn, logText } from "../utils/logger.js"
+import { logError, logWarn} from "../utils/logger.js"
+import { info } from "../utils/color.js";
 import { GithubService } from "../services/githubService.js";
 import { resolveGitContext } from "../utils/gitContext.js";
 import { resolveGithubToken } from "../config/env.js";
@@ -19,13 +20,13 @@ async function getCommand(pullNumber: number): Promise<void> {
         const mergeStatus = pullRequest.merged ? 'Merged' : 'Pending Merge'
 
         // Display pull request data in clean format
-        logWarn(`Pull Request #${pullRequest.number} (${pullRequest.state}) ${pullRequest.html_url}`, { bold: true });
-        console.log(`${pullRequest.head.ref} --> ${pullRequest.base.ref} (${mergeStatus})`);
+        logWarn(`Pull Request #${pullRequest.number} (${pullRequest.state}) ${pullRequest.html_url}`);
+        console.log(`${info(mergeStatus)} ${pullRequest.base.ref} <- ${pullRequest.head.ref}`);
         console.log(`Author: ${pullRequest.user.login}`);
         console.log(`Date: ${pullRequest.created_at}`);
 
-        logText(`\n    ${pullRequest.title}\n`, { bold: true });
-        console.log(`    ${pullRequest.body}\n`);
+        console.log(`\n----${pullRequest.title}----\n`);
+        console.log(`${pullRequest.body}\n`);
 
     } catch (error) {   
         if (error instanceof NoGitRepoError) {
