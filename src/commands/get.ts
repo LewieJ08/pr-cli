@@ -1,5 +1,6 @@
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js"
-import { logError, logWarn, logText } from "../utils/logger.js"
+import { logError} from "../utils/logger.js"
+import { warn, bold, dim, success } from "../utils/color.js";
 import { GithubService } from "../services/githubService.js";
 import { resolveGitContext } from "../utils/gitContext.js";
 import { resolveGithubToken } from "../config/env.js";
@@ -16,16 +17,46 @@ async function getCommand(pullNumber: number): Promise<void> {
         });
 
         const pullRequest = await github.getPullRequest(pullNumber);
-        const mergeStatus = pullRequest.merged ? 'Merged' : 'Pending Merge'
+        const mergeStatus = pullRequest.merged ? success('Merged') : warn('Pending Merge');
+        const state = pullRequest.state === 'open' ? success('OPEN') : dim('CLOSED');
+        const body = pullRequest.body?.trim() ?? '';
 
-        // Display pull request data in clean format
-        logWarn(`Pull Request #${pullRequest.number} (${pullRequest.state}) ${pullRequest.html_url}`, { bold: true });
-        console.log(`${pullRequest.head.ref} --> ${pullRequest.base.ref} (${mergeStatus})`);
-        console.log(`Author: ${pullRequest.user.login}`);
-        console.log(`Date: ${pullRequest.created_at}`);
+        // Header
+        console.log(
+            bold(`PR #${pullRequest.number}`),
+            state,
+            pullRequest.html_url
+        );
 
-        logText(`\n    ${pullRequest.title}\n`, { bold: true });
-        console.log(`    ${pullRequest.body}\n`);
+        // Merge status / branches
+        console.log(
+            mergeStatus,
+            dim(pullRequest.base.ref),
+            dim('←'),
+            dim(pullRequest.head.ref)
+        );
+
+        // Metadata 
+        console.log(
+            dim('Author:'),
+            pullRequest.user.login,
+            dim('·'),
+            dim('Created:'),
+            new Date(pullRequest.created_at).toUTCString()
+        );
+
+        // Divider
+        console.log(dim('─'.repeat(60)));
+
+        // Title
+        console.log(bold(pullRequest.title));
+
+        // Body 
+        if (body.length > 500) {
+            console.log(`\n ${body.trim()} \n`);
+        } else if (body) {
+            console.log(body);
+        }
 
     } catch (error) {   
         if (error instanceof NoGitRepoError) {
