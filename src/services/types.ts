@@ -19,7 +19,7 @@ export interface PullRequest {
     state: 'open' | 'closed';
     title: string;
     user: User;
-    body: string;
+    body?: string;
     created_at: string;
     head: {
         ref: string;

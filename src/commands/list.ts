@@ -2,8 +2,8 @@ import { resolveGithubToken } from "../config/env.js";
 import { resolveGitContext } from "../utils/gitContext.js";
 import { GithubService } from "../services/githubService.js";
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js";
-import { logError, logWarn } from "../utils/logger.js";
-import { info } from "../utils/color.js";
+import { logError } from "../utils/logger.js";
+import {warn, bold, dim, success } from "../utils/color.js";
 
 async function listCommand(): Promise<void> {
     try {
@@ -19,16 +19,40 @@ async function listCommand(): Promise<void> {
         const pullRequests = await github.listPullRequests();
         
         for (const pullRequest of pullRequests) {
-            const mergeStatus = pullRequest.merged ? 'Merged' : 'Pending Merge';
+            const mergeStatus = pullRequest.merged ? success('Merged') : warn('Pending Merge');
+            const state = pullRequest.state === 'open' ? success('OPEN') : dim('CLOSED');
 
-            logWarn(`Pull Request #${pullRequest.number} (${pullRequest.state}) ${pullRequest.html_url}`);
-            console.log(`${info(mergeStatus)} ${pullRequest.base.ref} <- ${pullRequest.head.ref}`);
-            console.log(`Author: ${pullRequest.user.login}`);
-            console.log(`Date: ${pullRequest.created_at}`);
+            // Header
+            console.log(
+                bold(`PR #${pullRequest.number}`),
+                state,
+                pullRequest.html_url
+            );
 
-            console.log(`\n    ${pullRequest.title}\n`);
+            // Title
+            console.log(bold(pullRequest.title));
+
+            // Merge status / branches
+            console.log(
+                mergeStatus,
+                dim(pullRequest.base.ref),
+                dim('←'),
+                dim(pullRequest.head.ref)
+            );
+
+            // Metadata 
+            console.log(
+                dim('Author:'),
+                pullRequest.user.login,
+                dim('·'),
+                dim('Created:'),
+                new Date(pullRequest.created_at).toUTCString()
+            );
+
+            // Divider
+            console.log(dim('─'.repeat(60)));
+
         }
-    
     } catch (error) {
         if (error instanceof NoGitRepoError) {
             logError(error.message);
