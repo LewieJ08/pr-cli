@@ -2,6 +2,7 @@ import { Command } from "commander";
 import listCommand from "./commands/list.js";
 import createCommand from "./commands/create.js";
 import getCommand from "./commands/get.js";
+import updateCommand from "./commands/update.js";
 import { authCommand, AuthOptions } from "./commands/auth.js";
 
 const program = new Command('pr');   
@@ -34,6 +35,14 @@ program
     .argument('<pullNumber>', 'Pull request number')
     .action((pullNumber: number) => {
         getCommand(pullNumber);
+    })
+
+program
+    .command('update')
+    .description('Update a pull request')
+    .argument('<pullNumber>', 'Pull request number')
+    .action((pullNumber: number) => {
+        updateCommand(pullNumber);
     })
 
 // Auth command
