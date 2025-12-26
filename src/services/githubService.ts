@@ -65,8 +65,21 @@ export class GithubService {
         })
     }
 
-    // Get a pull request by pull number
-    public getPullRequest(pullNumber: number): Promise<PullRequest> {
-        return this.request<PullRequest>(`${this.repoPath}/pulls/${pullNumber}`, { method: 'GET' })
+    public getPullRequest(pullNumber: number) {
+        return this.request(`${this.repoPath}`)
+    }
+
+    public updatePullRequest(
+        pullNumber: number,
+        title: string,
+        body: string,
+        state: 'open' | 'closed',
+        base: string,
+    ) {
+        return this.request(`${this.repoPath}/pulls/${pullNumber}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ title, body, state, base })
+        })
     }
 }
