@@ -5,7 +5,7 @@ import { prompt } from "../utils/prompt.js";
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js";
 import { logError, logSuccess } from "../utils/logger.js";
 
-async function updateCommand(): Promise<void> {
+async function updateCommand(pullNumber: number): Promise<void> {
     try {
         const context = resolveGitContext();
         const token = resolveGithubToken();
@@ -15,15 +15,17 @@ async function updateCommand(): Promise<void> {
             owner: context.owner, 
             repo: context.repo
         });
-
+                                                                
+        const pullRequest = await github.getPullRequest(pullNumber);
         const repo = await github.getRepository();
         const title = await prompt('title > ');
         const body = await prompt('body > ');
 
         await github.updatePullRequest(
+            pullNumber,
             title, 
             body, 
-            context.head, // TODO replace with state and get state from github.getPullRequest
+            pullRequest.state,
             repo.default_branch
         );
 
