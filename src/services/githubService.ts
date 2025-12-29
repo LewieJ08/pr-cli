@@ -65,8 +65,8 @@ export class GithubService {
         })
     }
 
-    public getPullRequest(pullNumber: number) {
-        return this.request(`${this.repoPath}`)
+    public getPullRequest(pullNumber: number): Promise<PullRequest> {
+        return this.request<PullRequest>(`${this.repoPath}/pulls/${pullNumber}`, {method: 'GET'})
     }
 
     public updatePullRequest(
