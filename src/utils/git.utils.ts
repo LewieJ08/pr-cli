@@ -1,6 +1,6 @@
 import { execSync } from "child_process";
-import { resolveGitContext } from "./gitContext.js";
-import { GithubService } from "../services/githubService.js";
+import { resolveGitContext } from "./git-context.utils.js";
+import { GithubService } from "../services/github.service.js";
 
 interface ParsedUrlItems {
     owner: string;

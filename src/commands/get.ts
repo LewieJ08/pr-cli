@@ -1,8 +1,8 @@
-import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js"
-import { logError} from "../utils/logger.js"
-import { warn, bold, dim, success } from "../utils/color.js";
-import { GithubService } from "../services/githubService.js";
-import { resolveGitContext } from "../utils/gitContext.js";
+import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js"
+import { logError} from "../utils/logger.utils.js"
+import { warn, bold, dim, success } from "../utils/color.utils.js";
+import { GithubService } from "../services/github.service.js";
+import { resolveGitContext } from "../utils/git-context.utils.js";
 import { resolveGithubToken } from "../config/env.js";
 
 async function getCommand(pullNumber: number): Promise<void> {

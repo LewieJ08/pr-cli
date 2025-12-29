@@ -1,7 +1,7 @@
 import { saveConfig, clearConfig } from "../config/config.js"
-import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/gitUtils.js"; 
-import { logError, logSuccess, logInfo } from "../utils/logger.js";
-import { prompt } from "../utils/prompt.js";
+import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js"; 
+import { logError, logSuccess, logInfo } from "../utils/logger.utils.js";
+import { prompt } from "../utils/prompt.utils.js";
 
 export interface AuthOptions{
     delete?: boolean

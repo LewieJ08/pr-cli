@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { homedir } from "os";
-import { validateGithubToken, TokenValidationResult } from "../utils/gitUtils.js";
+import { validateGithubToken, TokenValidationResult } from "../utils/git.utils.js";
 
 const CONFIG_DIR = `${homedir()}/.config/pr-cli/`;
 const CONFIG_FILE = `${CONFIG_DIR}/config.json`
