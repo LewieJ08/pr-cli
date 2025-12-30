@@ -7,7 +7,7 @@ import { authCommand, AuthOptions } from "./commands/auth.js";
 
 const program = new Command('pr');   
 
-// Main pr commands
+// Core pull request operations
 program 
     .description('A cli tool that allows users to create and manage pull requests')
     .version('1.0.0')
@@ -32,7 +32,7 @@ program
 program 
     .command('get')
     .description('Get a pull request')
-    .argument('<pullNumber>', 'Pull request number')
+    .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {
         getCommand(pullNumber);
     })
@@ -40,12 +40,21 @@ program
 program
     .command('update')
     .description('Update a pull request')
-    .argument('<pullNumber>', 'Pull request number')
+    .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {
         updateCommand(pullNumber);
     })
 
-// Auth command
+// Pull request inspection
+program 
+    .command('commits')
+    .description('List commits on a pull request')
+    .argument('<pr-number>', 'Pull request number')
+    .action((pullNumber: number) => {   
+        
+    })
+
+// Authentication
 program
     .command('auth')
     .description('Authenticate GitHub Token')

@@ -58,7 +58,7 @@ async function getCommand(pullNumber: number): Promise<void> {
             console.log(body);
         }
 
-    } catch (error) {   
+    } catch (error: unknown) {   
         if (error instanceof NoGitRepoError) {
             logError(error.message);
             process.exit(1);

@@ -53,7 +53,7 @@ async function listCommand(): Promise<void> {
             console.log(dim('─'.repeat(60)));
 
         }
-    } catch (error) {
+    } catch (error: unknown) {
         if (error instanceof NoGitRepoError) {
             logError(error.message);
             process.exit(1);
