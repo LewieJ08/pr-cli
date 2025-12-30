@@ -30,7 +30,7 @@ async function updateCommand(pullNumber: number): Promise<void> {
         );
 
         logSuccess(`Pull Request for '${repo.name}' updated successfully`);
-    } catch (error) {
+    } catch (error: unknown) {
         if (error instanceof NoGitRepoError) {
             logError(error.message);
             process.exit(1);

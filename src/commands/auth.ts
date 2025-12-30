@@ -17,7 +17,7 @@ export async function authCommand(options: AuthOptions) {
             const tokenData = await saveConfig(token);
             logSuccess(`Github token for user '${tokenData.username}' authenticated successfully`);
         }
-    } catch (error) {
+    } catch (error: unknown) {
         if (error instanceof NoGitRepoError) {
             logError(error.message);
             process.exit(1);

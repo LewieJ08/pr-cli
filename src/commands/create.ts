@@ -28,7 +28,7 @@ async function createCommand(): Promise<void> {
         );
 
         logSuccess(`Pull Request for '${repo.name}' created successfully`);
-    } catch (error) {
+    } catch (error: unknown) {
         if (error instanceof NoGitRepoError) {
             logError(error.message);
             process.exit(1);
