@@ -12,6 +12,18 @@ export interface Repository {
     default_branch: string;
 }
 
+export interface Commit {
+    sha: number;
+    commit: {
+        author: {
+            name: string;
+            email: string;
+            date: string;
+        }
+        message: string;
+    }
+}
+
 export interface PullRequest {
     id: number;
     html_url: string;
@@ -116,8 +128,8 @@ export class GithubService {
     }
 
     // List commits of a pull request 
-    public listPullRequestCommits(pullNumber: number) {
-        return this.request(`${this.repoPath}/pulls/${pullNumber}/commits`, {
+    public listPullRequestCommits(pullNumber: number): Promise<Commit[]> {
+        return this.request<Commit[]>(`${this.repoPath}/pulls/${pullNumber}/commits`, {
             method: 'GET'
         })
     }
