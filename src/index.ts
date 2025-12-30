@@ -3,6 +3,7 @@ import listCommand from "./commands/list.js";
 import createCommand from "./commands/create.js";
 import getCommand from "./commands/get.js";
 import updateCommand from "./commands/update.js";
+import commitsCommand from "./commands/commits.js";
 import { authCommand, AuthOptions } from "./commands/auth.js";
 
 const program = new Command('pr');   
@@ -51,7 +52,7 @@ program
     .description('List commits on a pull request')
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {   
-        
+        commitsCommand(pullNumber);
     })
 
 // Authentication
