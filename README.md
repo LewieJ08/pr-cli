@@ -3,14 +3,15 @@
 A tool that allows users to create and manage pull requests from the command line
 
 ## Features
+### Core pull request operations
 - List pull requests
 - Create a pull request
 - Get a pull request
+- Update a pull request
+### Pull request inspection
+- List commits on a pull request
 
 #### Features Coming
-
->- Update a pull request
->- List commits on a pull request
 >- List pull requests files
 >- Check if a pull request has been merged
 >- Merge a pull request
