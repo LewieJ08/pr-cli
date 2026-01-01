@@ -133,4 +133,11 @@ export class GithubService {
             method: 'GET'
         })
     }
+
+    // List files of a pull request
+    public listPullRequestFiles(pullNumber: number) {
+        return this.request(`${this.repoPath}/pulls/${pullNumber}/files`, {
+            method: 'GET'
+        })
+    }
 }
