@@ -10,9 +10,9 @@ A tool that allows users to create and manage pull requests from the command lin
 - Update a pull request
 ### Pull request inspection
 - List commits on a pull request
+- List pull requests files
 
 #### Features Coming
->- List pull requests files
 >- Check if a pull request has been merged
 >- Merge a pull request
 >- Update a pull request branch
