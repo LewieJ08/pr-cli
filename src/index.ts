@@ -68,7 +68,7 @@ program
 // Authentication
 program
     .command('auth')
-    .description('Authenticate GitHub Token')
+    .description('Authenticate GitHub Token (Required)')
     .option('-d, --delete', 'Delete GitHub token from config')
     .action((options: AuthOptions) => {
         authCommand(options);
