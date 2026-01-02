@@ -24,6 +24,15 @@ export interface Commit {
     }
 }
 
+export interface File {
+    sha: number;
+    filename: string;
+    additions: number;
+    deletions: number;
+    changes: number;
+    patch: string;
+}
+
 export interface PullRequest {
     id: number;
     html_url: string;
@@ -135,8 +144,8 @@ export class GithubService {
     }
 
     // List files of a pull request
-    public listPullRequestFiles(pullNumber: number) {
-        return this.request(`${this.repoPath}/pulls/${pullNumber}/files`, {
+    public listPullRequestFiles(pullNumber: number): Promise<File[]> {
+        return this.request<File[]>(`${this.repoPath}/pulls/${pullNumber}/files`, {
             method: 'GET'
         })
     }
