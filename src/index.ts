@@ -4,6 +4,7 @@ import createCommand from "./commands/create.js";
 import getCommand from "./commands/get.js";
 import updateCommand from "./commands/update.js";
 import commitsCommand from "./commands/commits.js";
+import filesCommand from "./commands/files.js";
 import { authCommand, AuthOptions } from "./commands/auth.js";
 
 const program = new Command('pr');   
@@ -55,6 +56,15 @@ program
         commitsCommand(pullNumber);
     })
 
+
+program 
+    .command('files')
+    .description('List pull requests files')
+    .argument('<pr-number>', 'Pull request number')
+    .action((pullNumber: number) => {   
+        filesCommand(pullNumber);
+    })
+    
 // Authentication
 program
     .command('auth')
