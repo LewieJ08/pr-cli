@@ -149,4 +149,11 @@ export class GithubService {
             method: 'GET'
         })
     }
+
+    // Check if a pull request has been merged
+    public checkPullRequestMerged(pullNumber: number) {
+        return this.request(`${this.repoPath}/pulls/${pullNumber}/merge`, {
+            method: 'GET'
+        })
+    }
 }
