@@ -5,6 +5,7 @@ import getCommand from "./commands/get.js";
 import updateCommand from "./commands/update.js";
 import commitsCommand from "./commands/commits.js";
 import filesCommand from "./commands/files.js";
+import statusCommand from "./commands/status.js";
 import { authCommand, AuthOptions } from "./commands/auth.js";
 
 const program = new Command('pr');   
@@ -64,6 +65,15 @@ program
     .action((pullNumber: number) => {   
         filesCommand(pullNumber);
     })
+
+program 
+    .command('status')
+    .description('Check if a pull request has been merged')
+    .argument('<pr-number>', 'Pull request number')
+    .action((pullNumber: number) => {   
+        statusCommand(pullNumber);
+    })
+
     
 // Authentication
 program
