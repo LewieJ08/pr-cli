@@ -1,61 +1,12 @@
-export interface User {
-    id: number;
-    login: string; // Username
-    email: string;
-}
+import { PullRequest, User, File, Commit, Repository } from "./github.types.js";
 
-export interface Repository {
-    id: number;
-    name: string;
-    full_name: string;
-    html_url: string;
-    default_branch: string;
-}
-
-export interface Commit {
-    sha: number;
-    commit: {
-        author: {
-            name: string;
-            email: string;
-            date: string;
-        }
-        message: string;
-    }
-}
-
-export interface File {
-    sha: number;
-    filename: string;
-    additions: number;
-    deletions: number;
-    changes: number;
-    patch: string;
-}
-
-export interface PullRequest {
-    id: number;
-    html_url: string;
-    number: number;
-    state: 'open' | 'closed';
-    title: string;
-    user: User;
-    body?: string;
-    created_at: string;
-    head: {
-        ref: string;
-    }
-    base: {
-        ref: string;
-    }
-    merged: boolean;
-}
-
-export interface GithubServiceConfig {
+interface GithubServiceConfig {
     token: string;
     owner: string;
     repo: string;
 }
+
+type ResponseMode = 'json' | 'status';
 
 export class GithubService {
     private readonly baseUrl: string;
@@ -67,7 +18,11 @@ export class GithubService {
     }
 
     // Make request to github api
-    private async request<T>(path: string, options: RequestInit): Promise<T> {
+    private async request<T>(
+        path: string,
+        options:RequestInit,
+        mode: ResponseMode = 'json'
+    ): Promise<T> {
         const response = await fetch(`${this.baseUrl}${path}`, {
             ...options,
             headers: {
@@ -77,6 +32,16 @@ export class GithubService {
                 ...options.headers
             },
         });
+
+        if (mode === 'status') {
+            if (response.status === 204) {
+                return true as T;
+            }
+
+            if (response.status === 404) {
+                return false as T;
+            }
+        }
 
         const data = await response.json();
 
@@ -151,9 +116,11 @@ export class GithubService {
     }
 
     // Check if a pull request has been merged
-    public checkPullRequestMerged(pullNumber: number) {
-        return this.request(`${this.repoPath}/pulls/${pullNumber}/merge`, {
-            method: 'GET'
-        })
+    public checkPullRequestMerged(pullNumber: number): Promise<boolean> {
+        return this.request(
+            `${this.repoPath}/pulls/${pullNumber}/merge`,
+            { method: 'GET' },
+            'status'
+        )
     }
 }
