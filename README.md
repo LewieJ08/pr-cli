@@ -1,6 +1,6 @@
 # PR-CLI
 
-A tool that allows users to create and manage pull requests from the command line
+A tool that allows users to create and manage pull requests from the command line. Planning to publish on NPM when at a more complete state.
 
 ## Features
 ### Core pull request operations
@@ -12,10 +12,10 @@ A tool that allows users to create and manage pull requests from the command lin
 - List commits on a pull request
 - List pull requests files
 - Check if a pull request has been merged
-
-## Features Coming
 ### Pull request actions
 - Merge a pull request
+
+## Features Coming
 - Update a pull request branch
 
 
