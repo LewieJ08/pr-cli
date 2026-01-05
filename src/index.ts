@@ -74,6 +74,16 @@ program
         statusCommand(pullNumber);
     })
 
+// Pull request actions
+
+program
+    .command('merge')
+    .description('Merge a pull request')
+    .argument('<pr-number>', 'Pull request number')
+    .action((pullNumber: number) => {
+
+    })
+
     
 // Authentication
 program
