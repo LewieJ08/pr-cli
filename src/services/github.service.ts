@@ -123,4 +123,11 @@ export class GithubService {
             'status'
         )
     }
+
+    // Merge a pull request
+    public mergePullRequest(pullNumber: number) {
+        return this.request(`${this.repoPath}/pulls/${pullNumber}/merge`, {
+            method: 'PUT'
+        })
+    }
 }
