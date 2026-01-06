@@ -40,7 +40,7 @@ export class GithubService {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(`GitHub API error ${response.status}: ${data?.message ?? 'Unknown error'}`)
+            throw new Error(`${response.status}: ${data?.message ?? 'Unknown error'}`)
         }
         
         return data
@@ -136,10 +136,14 @@ export class GithubService {
         pullNumber: number,
         expectedHeadSha: string
     ): Promise<boolean> {
-        const status = await this.request(`${this.repoPath}/pulls/${pullNumber}/update-branch`, {
-            method: 'PUT',
-            body: JSON.stringify({ expectedHeadSha })
-        })
+        const status = await this.request<number>(
+            `${this.repoPath}/pulls/${pullNumber}/update-branch`, 
+            {
+                method: 'PUT',
+                body: JSON.stringify({ expected_head_sha: expectedHeadSha })
+            },
+            'status'
+        )
 
         if (status === 202) {
             return true;
