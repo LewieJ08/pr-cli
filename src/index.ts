@@ -7,6 +7,7 @@ import commitsCommand from "./commands/commits.js";
 import filesCommand from "./commands/files.js";
 import statusCommand from "./commands/status.js";
 import mergeCommand from "./commands/merge.js";
+import syncCommand from "./commands/sync.js";
 import { authCommand, AuthOptions } from "./commands/auth.js";
 
 const program = new Command('pr');   
@@ -82,6 +83,14 @@ program
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {
         mergeCommand(pullNumber)
+    })
+
+program
+    .command('sync')
+    .description('Update a pull request branch')
+    .argument('<pr-number>', 'Pull request number')
+    .action((pullNumber: number) => {
+        syncCommand(pullNumber)
     })
 
     
