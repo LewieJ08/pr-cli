@@ -40,7 +40,7 @@ export class GithubService {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(`GitHub API error ${response.status}: ${data?.message ?? 'Unknown error'}`)
+            throw new Error(`${response.status}: ${data?.message ?? 'Unknown error'}`)
         }
         
         return data
