@@ -31,8 +31,8 @@ export async function saveConfig(token: string): Promise<TokenValidationResult> 
         githubToken: token
     });
 
-    mkdirSync(CONFIG_DIR, {recursive: true})
-    writeFileSync(CONFIG_FILE, configData)
+    mkdirSync(CONFIG_DIR, {recursive: true});
+    writeFileSync(CONFIG_FILE, configData);
 
     return tokenValidationResult;
 }
