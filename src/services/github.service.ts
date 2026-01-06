@@ -147,6 +147,6 @@ export class GithubService {
             return true;
         }
 
-        return false
+        return false;
     }
 }
