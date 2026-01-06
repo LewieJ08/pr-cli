@@ -34,13 +34,7 @@ export class GithubService {
         });
 
         if (mode === 'status') {
-            if (response.status === 204) {
-                return true as T;
-            }
-
-            if (response.status === 404) {
-                return false as T;
-            }
+            return response.status as T;
         }
 
         const data = await response.json();
@@ -116,29 +110,41 @@ export class GithubService {
     }
 
     // Check if a pull request has been merged
-    public checkPullRequestMerged(pullNumber: number): Promise<boolean> {
-        return this.request(
+    public async checkPullRequestMerged(pullNumber: number): Promise<boolean> {
+        const status = await this.request(
             `${this.repoPath}/pulls/${pullNumber}/merge`,
             { method: 'GET' },
             'status'
         )
+
+        if (status === 204) {
+            return true;
+        }
+
+        return false;
     }
 
     // Merge a pull request
     public mergePullRequest(pullNumber: number) {
-        return this.request(`${this.repoPath}/pulls/${pullNumber}/merge`, {
+        return this.request<number>(`${this.repoPath}/pulls/${pullNumber}/merge`, {
             method: 'PUT'
         })
     }
 
     // Update a pull request branch
-    public updatePullRequestBranch(
+    public async updatePullRequestBranch(
         pullNumber: number,
         expectedHeadSha: string
-    ) {
-        return this.request(`${this.repoPath}/pulls/${pullNumber}/update-branch`, {
+    ): Promise<boolean> {
+        const status = await this.request(`${this.repoPath}/pulls/${pullNumber}/update-branch`, {
             method: 'PUT',
             body: JSON.stringify({ expectedHeadSha })
         })
+
+        if (status === 202) {
+            return true;
+        }
+
+        return false
     }
 }
