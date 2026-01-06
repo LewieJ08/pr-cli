@@ -20,10 +20,10 @@ async function syncCommand(pullNumber: number) {
         const updated = await github.updatePullRequestBranch(pullNumber, expectedHashSha);
 
         if (!updated) {
-            throw new Error("Unable to sync pull request branch. Use 'pr commits' to find commit SHA")
+            throw new Error("Unable to sync pull request branch. Use 'pr commits' to find commit SHA");
         }
 
-        logSuccess('Pull Request branch successfully updated and synced')
+        logSuccess('Pull Request branch successfully updated and synced');
 
     } catch (error: unknown) {
         if (error instanceof NoGitRepoError) {
