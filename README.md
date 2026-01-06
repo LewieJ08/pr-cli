@@ -14,8 +14,6 @@ A tool that allows users to create and manage pull requests from the command lin
 - Check if a pull request has been merged
 ### Pull request actions
 - Merge a pull request
-
-## Features Coming
 - Update a pull request branch
 
 
