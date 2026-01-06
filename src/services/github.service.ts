@@ -138,7 +138,7 @@ export class GithubService {
     ): Promise<boolean> {
         const status = await this.request(`${this.repoPath}/pulls/${pullNumber}/update-branch`, {
             method: 'PUT',
-            body: JSON.stringify({ expectedHeadSha })
+            body: JSON.stringify({ expected_head_sha: expectedHeadSha })
         })
 
         if (status === 202) {
