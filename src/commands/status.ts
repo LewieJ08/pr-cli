@@ -22,7 +22,7 @@ async function statusCommand(pullNumber: number) {
         console.log(`Pull Request #${pullNumber}`);
         console.log(`Merge Status: ${mergeStatus}`);
 
-    } catch (error) {
+    } catch (error: unknown) {
         if (error instanceof NoGitRepoError) {
             logError(error.message);
             process.exit(1);
