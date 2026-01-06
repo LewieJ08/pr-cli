@@ -130,4 +130,15 @@ export class GithubService {
             method: 'PUT'
         })
     }
+
+    // Update a pull request branch
+    public updatePullRequestBranch(
+        pullNumber: number,
+        expectedHeadSha: string
+    ) {
+        return this.request(`${this.repoPath}/pulls/${pullNumber}/update-branch`, {
+            method: 'PUT',
+            body: JSON.stringify({ expectedHeadSha })
+        })
+    }
 }
