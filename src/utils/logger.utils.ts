@@ -1,4 +1,4 @@
-import * as c from './color.utils.js' 
+import * as c from './color.utils.js';
 
 // Helper log functions
 export function logSuccess(message: string): void {
