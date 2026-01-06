@@ -68,7 +68,7 @@ export async function validateGithubToken(token: string): Promise<TokenValidatio
         return {
             valid: true,
             username: user.login
-        }
+        };
 
     } catch (error) {
         if (error instanceof Error) {
