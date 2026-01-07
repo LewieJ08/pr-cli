@@ -10,6 +10,10 @@ import mergeCommand from "./commands/merge.js";
 import syncCommand from "./commands/sync.js";
 import { authCommand, AuthOptions } from "./commands/auth.js";
 
+const coreGroup = 'Core pull request operations';
+const inspectionGroup = 'Pull request inspection';
+const actionGroup = 'Pull request actions';
+
 const program = new Command('pr');   
 
 // Core pull request operations
@@ -23,6 +27,7 @@ program
 program
     .command('list')
     .description('List pull requests')
+    .helpGroup(coreGroup)
     .action(() => {
         listCommand();
     })
@@ -30,6 +35,7 @@ program
 program
     .command('create')
     .description('Create a pull request')
+    .helpGroup(coreGroup)
     .action(() => {
         createCommand();
     })
@@ -37,6 +43,7 @@ program
 program 
     .command('get')
     .description('Get a pull request')
+    .helpGroup(coreGroup)
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {
         getCommand(pullNumber);
@@ -45,6 +52,7 @@ program
 program
     .command('update')
     .description('Update a pull request')
+    .helpGroup(coreGroup)
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {
         updateCommand(pullNumber);
@@ -54,6 +62,7 @@ program
 program 
     .command('commits')
     .description('List commits on a pull request')
+    .helpGroup(inspectionGroup)
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {   
         commitsCommand(pullNumber);
@@ -63,6 +72,7 @@ program
 program 
     .command('files')
     .description('List pull requests files')
+    .helpGroup(inspectionGroup)
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {   
         filesCommand(pullNumber);
@@ -71,6 +81,7 @@ program
 program 
     .command('status')
     .description('Check if a pull request has been merged')
+    .helpGroup(inspectionGroup)
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {   
         statusCommand(pullNumber);
@@ -80,6 +91,7 @@ program
 program
     .command('merge')
     .description('Merge a pull request')
+    .helpGroup(actionGroup)
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {
         mergeCommand(pullNumber)
@@ -88,6 +100,7 @@ program
 program
     .command('sync')
     .description('Update a pull request branch')
+    .helpGroup(actionGroup)
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number) => {
         syncCommand(pullNumber)
@@ -98,6 +111,7 @@ program
 program
     .command('auth')
     .description('Authenticate GitHub Token (Required)')
+    .helpGroup('Authentication / Login')
     .option('-d, --delete', 'Delete GitHub token from config')
     .action((options: AuthOptions) => {
         authCommand(options);
