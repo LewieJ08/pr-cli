@@ -26,7 +26,6 @@ async function createCommand(): Promise<void> {
             context.head,
             repo.default_branch
         );
-        console.log(created)
 
         if (!created) {
             throw new Error('Unable to create pull request. Remember to push your changes\nIf this does not work please refer to docs')
