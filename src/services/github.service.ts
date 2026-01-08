@@ -1,4 +1,3 @@
-import { truncate } from "node:fs";
 import { PullRequest, User, File, Commit, Repository } from "./github.types.js";
 
 interface CreatePullRequestResponse {

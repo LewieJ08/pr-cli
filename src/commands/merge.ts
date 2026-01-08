@@ -2,15 +2,15 @@ import { GithubService } from "../services/github.service.js";
 import { resolveGitContext } from "../utils/git-context.utils.js";
 import { resolveGithubToken } from "../config/env.js";
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js";
-import { logError, logSuccess } from "../utils/logger.utils.js";
+import { logError, logInfo, logSuccess } from "../utils/logger.utils.js";
 import { prompt } from "../utils/prompt.utils.js";
 
 async function mergeCommand(pullNumber: number): Promise<void> {
     let validInput = false;
 
     // Confirm user would like to merge pull request
-    while (validInput = false) {
-        const confirm = await prompt(`Are you sure you want to merge PR #${pullNumber} (n/y) > `);
+    while (validInput === false) {
+        const confirm = await prompt(`Are you sure you want to merge PR #${pullNumber} (y/n) > `);
 
         switch (confirm.toLowerCase()) {
             case 'y':
@@ -34,6 +34,13 @@ async function mergeCommand(pullNumber: number): Promise<void> {
             repo: context.repo
         });
 
+        const pullRequest = await github.getPullRequest(pullNumber);
+
+        if (pullRequest.merged) {
+            logInfo(`Pull Request #${pullNumber} already merged.`);
+            process.exit(1);
+        }
+
         await github.mergePullRequest(pullNumber);
         logSuccess(`Pull Request #${pullNumber} successfully merged`);
     } catch (error: unknown) {
@@ -48,7 +55,9 @@ async function mergeCommand(pullNumber: number): Promise<void> {
         }
 
         if (error instanceof Error) {
-            logError(error.message);
+            if (error.message === '404') {
+                logError('Pull Request not found');
+            }
             process.exit(1);
         }
         
