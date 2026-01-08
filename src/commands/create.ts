@@ -20,12 +20,16 @@ async function createCommand(): Promise<void> {
         const title = await prompt('PR Title > ');
         const body = await prompt('PR Body > ');
 
-        await github.createPullRequest(
+        const created = await github.createPullRequest(
             title, 
             body, 
             context.head,
             repo.default_branch
         );
+
+        if (!created) {
+            throw new Error('Unable to create pull request. Remember to push your changes\nIf this does not work please refer to docs')
+        }
 
         logSuccess(`Pull Request for '${repo.name}' created successfully`);
     } catch (error: unknown) {
