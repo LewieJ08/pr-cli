@@ -1,3 +1,4 @@
+import { truncate } from "node:fs";
 import { PullRequest, User, File, Commit, Repository } from "./github.types.js";
 
 interface GithubServiceConfig {
@@ -62,17 +63,27 @@ export class GithubService {
     }
 
     // Create a pull request
-    public createPullRequest(
+    public async createPullRequest(
         title: string,
         body: string,
         head: string,
         base: string,
-    ) {
-        return this.request(`${this.repoPath}/pulls`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({ title, body, head, base })
-        })
+    ): Promise<boolean> {
+        const status = await this.request(
+            `${this.repoPath}/pulls`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({ title, body, head, base })
+            },
+            'status'
+        )
+
+        if (status === 201) {
+            return true;
+        }
+
+        return false;
     }
 
     // Get a pull request
