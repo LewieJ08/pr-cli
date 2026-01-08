@@ -17,8 +17,8 @@ async function createCommand(): Promise<void> {
         });
 
         const repo = await github.getRepository();
-        const title = await prompt('title > ');
-        const body = await prompt('body > ');
+        const title = await prompt('PR Title > ');
+        const body = await prompt('PR Body > ');
 
         await github.createPullRequest(
             title, 
