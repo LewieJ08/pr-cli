@@ -31,7 +31,8 @@ async function createCommand(): Promise<void> {
             throw new Error('Unable to create pull request. Remember to push your changes\nIf this does not work please refer to docs')
         }
 
-        logSuccess(`Pull Request for '${repo.name}' created successfully`);
+        logSuccess(`\nPull Request #${created.number} for '${repo.name}' created successfully`);
+        console.log(created.html_url);
     } catch (error: unknown) {
         if (error instanceof NoGitRepoError) {
             logError(error.message);

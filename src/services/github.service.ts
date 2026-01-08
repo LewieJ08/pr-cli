@@ -1,6 +1,12 @@
 import { truncate } from "node:fs";
 import { PullRequest, User, File, Commit, Repository } from "./github.types.js";
 
+interface CreatePullRequestResponse {
+    html_url: string;
+    number: number;
+    state: string;
+}
+
 interface GithubServiceConfig {
     token: string;
     owner: string;
@@ -68,22 +74,12 @@ export class GithubService {
         body: string,
         head: string,
         base: string,
-    ): Promise<boolean> {
-        const status = await this.request(
-            `${this.repoPath}/pulls`,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({ title, body, head, base })
-            },
-            'status'
-        )
-
-        if (status === 201) {
-            return true;
-        }
-
-        return false;
+    ): Promise<CreatePullRequestResponse> {
+        return this.request<CreatePullRequestResponse>(`${this.repoPath}/pulls`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({ title, body, head, base })
+        })  
     }
 
     // Get a pull request
