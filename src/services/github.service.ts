@@ -47,7 +47,7 @@ export class GithubService {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(`${response.status}: ${data?.message ?? 'Unknown error'}`)
+            throw new Error(`${response.status}`)
         }
         
         return data
@@ -69,7 +69,7 @@ export class GithubService {
     }
 
     // Create a pull request
-    public async createPullRequest(
+    public createPullRequest(
         title: string,
         body: string,
         head: string,

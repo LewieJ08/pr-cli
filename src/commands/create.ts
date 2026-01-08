@@ -45,7 +45,10 @@ async function createCommand(): Promise<void> {
         }
 
         if (error instanceof Error) {
-            logError(error.message);
+            if (error.message === '422') {
+                logError('Unable to create pull request. Ensure to push recent changes.');
+                logError('You cannot create a pull request if there is one already open on the current branch');
+            }
             process.exit(1);
         }
         
