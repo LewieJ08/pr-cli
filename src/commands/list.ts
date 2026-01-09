@@ -2,8 +2,8 @@ import { resolveGithubToken } from "../config/env.js";
 import { resolveGitContext } from "../utils/git-context.utils.js";
 import { GithubService } from "../services/github.service.js";
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js";
-import { logError } from "../utils/logger.utils.js";
-import {warn, bold, dim, success } from "../utils/color.utils.js";
+import { logError, logInfo } from "../utils/logger.utils.js";
+import { warn, bold, dim, success } from "../utils/color.utils.js";
 
 async function listCommand(): Promise<void> {
     try {
@@ -17,6 +17,10 @@ async function listCommand(): Promise<void> {
         });
 
         const pullRequests = await github.listPullRequests();
+
+        if (pullRequests.length === 0) {
+            console.log('No Open Pull Requests')
+        }
         
         for (const pullRequest of pullRequests) {
             const mergeStatus = pullRequest.merged ? success('Merged') : warn('Pending Merge');
