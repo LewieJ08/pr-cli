@@ -13,6 +13,8 @@ interface GithubServiceConfig {
 }
 
 type ResponseMode = 'json' | 'status';
+type PullRequestState = 'open' | 'closed' | 'all';
+type PullRequestSort = 'created' | 'updated' | 'popularity' | 'long-running'
 
 export class GithubService {
     private readonly baseUrl: string;
@@ -63,8 +65,13 @@ export class GithubService {
     }
 
     // List pull requests
-    public listPullRequests(): Promise<PullRequest[]> {
-        return this.request<PullRequest[]>(`${this.repoPath}/pulls`, {method: 'GET'});
+    public listPullRequests(
+        state: PullRequestState = 'open',
+        sort: PullRequestSort = 'created'
+    ): Promise<PullRequest[]> {
+        return this.request<PullRequest[]>(`${this.repoPath}/pulls?state=${state}&sort=${sort}`, {
+            method: 'GET',
+        });
     }
 
     // Create a pull request
