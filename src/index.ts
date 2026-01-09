@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import listCommand from "./commands/list.js";
+import { listCommand, ListOptions } from "./commands/list.js";
 import createCommand from "./commands/create.js";
 import getCommand from "./commands/get.js";
 import updateCommand from "./commands/update.js";
@@ -27,9 +27,12 @@ program
 program
     .command('list')
     .description('List pull requests')
+    .option('-a, --all', 'List all pull requests')
+    .option('--state [state]', 'State of pull request (open / closed)')
+    .option('--sort [sort]', "Sort pull requests by either 'created', 'updated', 'popularity' or 'long-running'")
     .helpGroup(coreGroup)
-    .action(() => {
-        listCommand();
+    .action((options: ListOptions) => {
+        listCommand(options);
     })
 
 program
