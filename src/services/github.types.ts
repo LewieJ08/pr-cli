@@ -42,6 +42,7 @@ export interface PullRequest {
     user: User;
     body?: string;
     created_at: string;
+    merged_at?: string;
     head: {
         ref: string;
     }

@@ -3,10 +3,24 @@ import { resolveGitContext } from "../utils/git-context.utils.js";
 import { GithubService } from "../services/github.service.js";
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js";
 import { logError } from "../utils/logger.utils.js";
-import {warn, bold, dim, success } from "../utils/color.utils.js";
+import { warn, bold, dim, success, error} from "../utils/color.utils.js";
+import { PullRequest } from "../services/github.types.js";
 
-async function listCommand(): Promise<void> {
+export interface ListOptions {
+    all?: boolean;
+    state?: 'open' | 'closed';
+    sort?: 'created' | 'updated' | 'popularity' | 'long-running';
+}
+
+export async function listCommand(options: ListOptions): Promise<void> {
+    let pullRequests: PullRequest[];    
+    let mergeStatus: string;
+
     try {
+        if (options.all && options.state) {
+            throw new Error('You cannot use the --all (-a) flag with the --state flag when running pr list');
+        }
+
         const { owner, repo } = resolveGitContext();    
         const token = resolveGithubToken();
         
@@ -16,15 +30,28 @@ async function listCommand(): Promise<void> {
             repo: repo
         });
 
-        const pullRequests = await github.listPullRequests();
+        if (options.all) {
+            pullRequests = await github.listPullRequests('all', options.sort);
+        } else {
+            pullRequests = await github.listPullRequests(options.state, options.sort);
+        } 
+
+        if (pullRequests.length === 0) {
+            console.log('No Pull Requests')
+        }
         
         for (const pullRequest of pullRequests) {
-            const mergeStatus = pullRequest.merged ? success('Merged') : warn('Pending Merge');
-            const state = pullRequest.state === 'open' ? success('OPEN') : dim('CLOSED');
+            mergeStatus = pullRequest.merged_at ? success('Merged') : warn('Pending Merge');
+
+            if (pullRequest.state === 'closed' && !pullRequest.merged_at) {
+                mergeStatus = error('Not Merged');
+            }
+
+            const state = pullRequest.state === 'open' ? 'OPEN' : dim('CLOSED');
 
             // Header
             console.log(
-                bold(`PR #${pullRequest.number}`),
+                bold(`\nPR #${pullRequest.number}`),
                 state,
                 pullRequest.html_url
             );
@@ -72,5 +99,3 @@ async function listCommand(): Promise<void> {
         throw error;
     }
 }
-
-export default listCommand;
