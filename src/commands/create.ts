@@ -5,7 +5,11 @@ import { prompt } from "../utils/prompt.utils.js";
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js";
 import { logError, logSuccess } from "../utils/logger.utils.js";
 
-async function createCommand(): Promise<void> {
+export interface CreateOptions { 
+    draft: boolean;
+}
+
+export async function createCommand(options: CreateOptions): Promise<void> {
     try {
         const context = resolveGitContext();
         const token = resolveGithubToken();
@@ -55,5 +59,3 @@ async function createCommand(): Promise<void> {
         throw error;
     }
 }
-
-export default createCommand;
