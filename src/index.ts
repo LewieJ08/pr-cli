@@ -1,6 +1,6 @@
 import { Command } from "commander";
 import { listCommand, ListOptions } from "./commands/list.js";
-import createCommand from "./commands/create.js";
+import { createCommand, CreateOptions } from "./commands/create.js";
 import getCommand from "./commands/get.js";
 import updateCommand from "./commands/update.js";
 import commitsCommand from "./commands/commits.js";
@@ -38,9 +38,10 @@ program
 program
     .command('create')
     .description('Create a pull request')
+    .option('-d, --d', 'Create a draft pull request')
     .helpGroup(coreGroup)
-    .action(() => {
-        createCommand();
+    .action((options: CreateOptions) => {
+        createCommand(options);
     })
 
 program 
