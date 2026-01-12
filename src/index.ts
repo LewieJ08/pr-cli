@@ -95,7 +95,7 @@ program
 program
     .command('merge')
     .description('Merge a pull request')
-    .option('-m, --method [merge-method]', 'Merge method')
+    .option('-m, --method [merge-method]', 'Merge method (merge / squash / rebase)')
     .helpGroup(actionGroup)
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number, options: MergeOptions) => {
