@@ -28,7 +28,8 @@ export async function createCommand(options: CreateOptions): Promise<void> {
             title, 
             body, 
             context.head,
-            repo.default_branch
+            repo.default_branch,
+            options.draft
         );
 
         if (!created) {
