@@ -38,7 +38,7 @@ program
 program
     .command('create')
     .description('Create a pull request')
-    .option('-d, --d', 'Create a draft pull request')
+    .option('-d, --draft', 'Create a draft pull request')
     .helpGroup(coreGroup)
     .action((options: CreateOptions) => {
         createCommand(options);

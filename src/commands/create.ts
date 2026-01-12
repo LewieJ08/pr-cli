@@ -10,6 +10,7 @@ export interface CreateOptions {
 }
 
 export async function createCommand(options: CreateOptions): Promise<void> {
+    console.log(options.draft)
     try {
         const context = resolveGitContext();
         const token = resolveGithubToken();
