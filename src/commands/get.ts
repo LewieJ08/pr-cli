@@ -75,7 +75,11 @@ async function getCommand(pullNumber: number): Promise<void> {
         }
 
         if (error instanceof Error) {
-            logError(error.message);
+            if (error.message === '404') {
+                logError('Pull request does not exist');
+            } else {
+                logError(error.message);
+            }
             process.exit(1);
         }
 
