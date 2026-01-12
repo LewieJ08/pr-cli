@@ -1,6 +1,6 @@
 import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js"
 import { logError} from "../utils/logger.utils.js"
-import { warn, bold, dim, success } from "../utils/color.utils.js";
+import { warn, bold, dim, success, error } from "../utils/color.utils.js";
 import { GithubService } from "../services/github.service.js";
 import { resolveGitContext } from "../utils/git-context.utils.js";
 import { resolveGithubToken } from "../config/env.js";
@@ -17,7 +17,12 @@ async function getCommand(pullNumber: number): Promise<void> {
         });
 
         const pullRequest = await github.getPullRequest(pullNumber);
-        const mergeStatus = pullRequest.merged ? success('Merged') : warn('Pending Merge');
+        let mergeStatus = pullRequest.merged ? success('Merged') : warn('Pending Merge');
+
+        if (pullRequest.state === 'closed' && !pullRequest.merged) {
+            mergeStatus = error('Not Merged');
+        }
+        
         const state = pullRequest.state === 'open' ? success('OPEN') : dim('CLOSED');
         const body = pullRequest.body?.trim() ?? '';
 
