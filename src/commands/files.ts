@@ -43,7 +43,7 @@ async function filesCommand(pullNumber: number): Promise<void> {
         }
 
         if (error instanceof Error) {
-            if (error.message) {
+            if (error.message === '404') {
                 logError('Pull request does not exist');
             } else {
                 logError(error.message);
