@@ -42,7 +42,17 @@ async function updateCommand(pullNumber: number): Promise<void> {
         }
 
         if (error instanceof Error) {
-            logError(error.message);
+            switch (error.message) {
+                case '422':
+                    logError('Pull request has been closed');
+                    break;
+                case '404':
+                    logError('Pull Request does not exist');
+                    break;
+                default:
+                    logError(error.message);
+                    break;
+            }
             process.exit(1);
         }
         
