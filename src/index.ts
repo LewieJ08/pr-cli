@@ -6,7 +6,7 @@ import updateCommand from "./commands/update.js";
 import commitsCommand from "./commands/commits.js";
 import filesCommand from "./commands/files.js";
 import statusCommand from "./commands/status.js";
-import mergeCommand from "./commands/merge.js";
+import { mergeCommand, MergeOptions } from "./commands/merge.js";
 import syncCommand from "./commands/sync.js";
 import { authCommand, AuthOptions } from "./commands/auth.js";
 
@@ -95,9 +95,10 @@ program
 program
     .command('merge')
     .description('Merge a pull request')
+    .option('-m, --method [merge-method]', 'Merge method')
     .helpGroup(actionGroup)
     .argument('<pr-number>', 'Pull request number')
-    .action((pullNumber: number) => {
+    .action((pullNumber: number, options: MergeOptions) => {
         mergeCommand(pullNumber)
     })
 
