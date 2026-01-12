@@ -80,11 +80,12 @@ export class GithubService {
         body: string,
         head: string,
         base: string,
+        draft: boolean,
     ): Promise<CreatePullRequestResponse> {
         return this.request<CreatePullRequestResponse>(`${this.repoPath}/pulls`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({ title, body, head, base })
+            body: JSON.stringify({ title, body, head, base, draft })
         })  
     }
 
