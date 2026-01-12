@@ -6,7 +6,7 @@ import { logError, logInfo, logSuccess } from "../utils/logger.utils.js";
 import { prompt } from "../utils/prompt.utils.js";
 
 export interface MergeOptions {
-    mergeMethod?: 'merge' | 'squash' | 'rebase';
+    method?: 'merge' | 'squash' | 'rebase';
 }
 
 export async function mergeCommand(pullNumber: number, options: MergeOptions): Promise<void> {
@@ -45,7 +45,7 @@ export async function mergeCommand(pullNumber: number, options: MergeOptions): P
             process.exit(1);
         }
 
-        await github.mergePullRequest(pullNumber, options.mergeMethod);
+        await github.mergePullRequest(pullNumber, options.method);
         logSuccess(`Pull Request #${pullNumber} successfully merged`);
     } catch (error: unknown) {
         if (error instanceof NoGitRepoError) {
