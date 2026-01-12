@@ -15,7 +15,7 @@ interface GithubServiceConfig {
 type ResponseMode = 'json' | 'status';
 type PullRequestState = 'open' | 'closed' | 'all';
 type PullRequestSort = 'created' | 'updated' | 'popularity' | 'long-running';
-type MergeMethod = 'merge' | 'squash' | 'rebase' | undefined;
+type MergeMethod = 'merge' | 'squash' | 'rebase';
 
 export class GithubService {
     private readonly baseUrl: string;
@@ -142,7 +142,7 @@ export class GithubService {
     // Merge a pull request
     public mergePullRequest(
         pullNumber: number, 
-        mergeMethod: MergeMethod
+        mergeMethod: MergeMethod = 'merge'
     ) {
         return this.request<number>(`${this.repoPath}/pulls/${pullNumber}/merge`, {
             method: 'PUT',
