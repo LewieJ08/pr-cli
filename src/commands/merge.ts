@@ -5,7 +5,11 @@ import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js";
 import { logError, logInfo, logSuccess } from "../utils/logger.utils.js";
 import { prompt } from "../utils/prompt.utils.js";
 
-async function mergeCommand(pullNumber: number): Promise<void> {
+export interface MergeOptions {
+    mergeMethod?: 'merge' | 'squash' | 'rebase';
+}
+
+export async function mergeCommand(pullNumber: number, options: MergeOptions): Promise<void> {
     let validInput = false;
 
     // Confirm user would like to merge pull request
@@ -41,7 +45,7 @@ async function mergeCommand(pullNumber: number): Promise<void> {
             process.exit(1);
         }
 
-        await github.mergePullRequest(pullNumber);
+        await github.mergePullRequest(pullNumber, options.mergeMethod);
         logSuccess(`Pull Request #${pullNumber} successfully merged`);
     } catch (error: unknown) {
         if (error instanceof NoGitRepoError) {
@@ -64,5 +68,3 @@ async function mergeCommand(pullNumber: number): Promise<void> {
         throw error;
     }
 }
-
-export default mergeCommand;
