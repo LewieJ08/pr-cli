@@ -99,7 +99,7 @@ program
     .helpGroup(actionGroup)
     .argument('<pr-number>', 'Pull request number')
     .action((pullNumber: number, options: MergeOptions) => {
-        mergeCommand(pullNumber)
+        mergeCommand(pullNumber, options)
     })
 
 program
