@@ -43,7 +43,11 @@ async function filesCommand(pullNumber: number): Promise<void> {
         }
 
         if (error instanceof Error) {
-            logError(error.message);
+            if (error.message) {
+                logError('Pull request does not exist');
+            } else {
+                logError(error.message);
+            }
             process.exit(1);
         }
 
