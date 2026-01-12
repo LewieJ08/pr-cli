@@ -15,7 +15,7 @@ async function statusCommand(pullNumber: number) {
             repo: context.repo,
             owner: context.owner
         });
-        
+        await github.getPullRequest(pullNumber);
         const merged = await github.checkPullRequestMerged(pullNumber);
         const mergeStatus = merged ? success('Merged') : error('Not Merged');
 
@@ -34,7 +34,11 @@ async function statusCommand(pullNumber: number) {
         }
 
         if (error instanceof Error) {
-            logError(error.message);
+            if (error.message === '404') {
+                logError('Pull request does not exist');
+            } else {
+                logError(error.message);
+            }
             process.exit(1);
         }
         
