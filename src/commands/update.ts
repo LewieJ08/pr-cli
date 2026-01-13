@@ -18,8 +18,8 @@ async function updateCommand(pullNumber: number): Promise<void> {
                                                                 
         const pullRequest = await github.getPullRequest(pullNumber);
         const repo = await github.getRepository();
-        const title = await prompt('title > ');
-        const body = await prompt('body > ');
+        const title = await prompt('New Title > ');
+        const body = await prompt('New Body > ');
 
         await github.updatePullRequest(
             pullNumber,
