@@ -342,7 +342,10 @@ Can be one of: ```merge```, ```squash```, ```rebase```
 
 #### Example Usage
 ```bash 
-> pr merge TODODODODODODODODODODODODO
+> pr merge 33
+Are you sure you want to merge PR #33 (y/n) > y
+Pull Request #33 successfully merged
+>
 ```
 
 ### ```pr sync```
