@@ -16,11 +16,11 @@ async function syncCommand(pullNumber: number) {
             repo: context.repo
         });
 
-        const expectedHashSha = await prompt('Enter the latest commit SHA of the pull request branch (HEAD) > ');
+        const expectedHashSha = await prompt('Enter the latest commit SHA (hash) of the pull request branch (HEAD) > ');
         const updated = await github.updatePullRequestBranch(pullNumber, expectedHashSha);
 
         if (!updated) {
-            throw new Error("Unable to sync pull request branch. Use 'pr commits' to find commit SHA");
+            throw new Error("Unable to sync pull request branch. Use 'pr commits' to find latest commit SHA\nPull request may already be merged/closed");
         }
 
         logSuccess('Pull Request branch successfully updated and synced');
