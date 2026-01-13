@@ -356,8 +356,8 @@ Update and sync a pull request branch. This is a good way to ensure your pull re
 ```bash 
 > pr sync 33
 Enter the latest commit SHA (hash) of the pull request branch (HEAD) > e39b3fb4owd39rh4fnienf933f
-
-
+Pull Request branch successfully updated and synced
+>
 ```
 
 
