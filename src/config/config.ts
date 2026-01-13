@@ -23,8 +23,8 @@ export function loadConfig(): string | null {
 export async function saveConfig(token: string): Promise<TokenValidationResult> {
     const tokenValidationResult = await validateGithubToken(token);
 
-    if (!tokenValidationResult.valid) {
-        throw new Error('Invalid Github token. Please try again');
+    if (!tokenValidationResult.valid && tokenValidationResult.reason !== 'pr: Not a git repository') {
+        throw new Error(tokenValidationResult.reason);
     }
     
     const configData = JSON.stringify({

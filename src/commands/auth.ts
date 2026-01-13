@@ -18,6 +18,11 @@ export async function authCommand(options: AuthOptions) {
             logSuccess(`Github token for user '${tokenData.username}' authenticated successfully`);
         }
     } catch (error: unknown) {
+        if (error instanceof NoGitRepoError) {
+            logError(error.message);
+            process.exit(1);
+        }
+
         if (error instanceof InvalidRemoteUrlError) {
             logError(error.message);
             process.exit(1);
@@ -27,5 +32,7 @@ export async function authCommand(options: AuthOptions) {
             logError(error.message);
             process.exit(1);
         }
+
+        throw error;
     }
 }
