@@ -33,13 +33,12 @@ pr-cli/
 └── tsconfig.json
 ```
 
-
 ## Installation
 
 If you do not have a Github token you will need to create one. We recommend a personal fine-grained token:
 https://github.com/settings/personal-access-tokens
 
-Ensure you have these permissions 
+Ensure you have these permissions:
 ![Github Perms](/docs/perms.png) 
 
 Clone the repository:
@@ -64,20 +63,10 @@ Link the CLI globally:
 ```bash
 npm link
 ```
+[Authenticate your github token](#authentication-pr-auth)
 
-## Usage
-
-Run the PR command 
-
-```bash
-# main pr command
-pr <command>
-
-# help command
-pr -h 
-
-# dev script
-npm run dev <command>
+```
+pr auth
 ```
 
 ## Commands
@@ -148,6 +137,7 @@ PR body > Added a new feature that does something i guess
 
 Pull Request 29 for 'REPO' created successfully 
 https://github.com/LewieJ08/REPO/pull/29
+>
 ```
 
 ### ```pr get```
@@ -363,4 +353,23 @@ Pull Request branch successfully updated and synced
 >
 ```
 
+## Authentication ```pr auth```
+
+In order to use **pr-cli** you will need to authenticate your GitHub token using the ```pr auth``` command. This will store your token in a global config file on your computer meaning **pr-cli** can access your token from anywhere.
+
+#### Usage
+```pr auth [options]```
+
+#### Options
+```-d, -delete```
+
+Clears global config removing your github token.
+
+#### Example Usage
+```
+> pr auth
+Github Token> YOUR TOKEN
+Github token for user 'USERNAME' authenticated successfully
+>
+```
 
