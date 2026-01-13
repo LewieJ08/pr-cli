@@ -7,7 +7,7 @@
   "bin": {
     "pr": "bin/pr.js"
   },
-  "files": ["bin", "dist"],
+  "files": ["bin", "dist", "docs"],
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/index.ts",
