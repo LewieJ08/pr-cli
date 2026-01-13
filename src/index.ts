@@ -19,7 +19,7 @@ const program = new Command('pr');
 // Core pull request operations
 program 
     .description('A cli tool that allows users to create and manage pull requests')
-    .version('1.0.0')
+    .version('1.0.4')
     .action(() => {
         program.outputHelp();
     })
