@@ -1,6 +1,8 @@
 # PR-CLI
 
-A tool that allows users to create and manage pull requests from the command line. Planning to publish on NPM when at a more complete state.
+A tool that allows users to create and manage pull requests from the command line. 
+
+NPM Package: https://www.npmjs.com/package/@lewiej08/pr-cli
 
 ## Features
 ### Core pull request operations
@@ -32,16 +34,24 @@ pr-cli/
 ├── README.md
 └── tsconfig.json
 ```
+## Prerequisites
 
-## Installation
-
-If you do not have a Github token you will need to create one. We recommend a personal fine-grained token:
+In order to use **pr-cli** you will need a Github Token. If you do not have a Github token you will need to create one. We recommend a personal fine-grained token:
 https://github.com/settings/personal-access-tokens
 
 Ensure you have these permissions:
 ![Github Perms](/docs/perms.png) 
 
-Clone the repository:
+
+## Installation
+
+### Option 1 - Install with NPM (Recommended)
+
+```bash
+npm install -g @lewiej08/pr-cli
+```
+
+### Option 2 - Clone the repo
 
 ```bash
 git clone https://github.com/LewieJ08/pr-cli.git
@@ -63,11 +73,15 @@ Link the CLI globally:
 ```bash
 npm link
 ```
-[Authenticate your github token](#authentication-pr-auth)
 
-```
+## Authentication / Login
+Once you have installed the package you will need to authenticate your GitHub token with the following command:
+
+```bash
 pr auth
 ```
+
+[Auth Help](#pr-auth)
 
 ## Commands
 
@@ -353,7 +367,7 @@ Pull Request branch successfully updated and synced
 >
 ```
 
-## Authentication ```pr auth```
+### ```pr auth```
 
 In order to use **pr-cli** you will need to authenticate your GitHub token using the ```pr auth``` command. This will store your token in a global config file on your computer meaning **pr-cli** can access your token from anywhere.
 
