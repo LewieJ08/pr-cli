@@ -56,14 +56,19 @@ export function parseRemoteUrl(remoteUrl: string): ParsedUrlItems {
 
 export async function validateGithubToken(token: string): Promise<TokenValidationResult> {
     try {
-        const context = resolveGitContext();
-        const github = new GithubService({
-            token: token, 
-            owner: context.owner, 
-            repo: context.repo
+        const response = await fetch('https://api.github.com/user', {
+            headers: {
+                'X-GitHub-Api-Version': '2022-11-28',
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/vnd.github+json',
+            }
         });
 
-        const user = await github.getUser();
+        const user = await response.json();
+
+        if (!response.ok) {
+            throw new Error('Invalid Github Token');
+        }
 
         return {
             valid: true,
