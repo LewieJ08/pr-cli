@@ -81,8 +81,8 @@ export class GithubService {
         body: string,
         head: string,
         base: string,
-        draft: boolean,
-        issue: number
+        draft?: boolean,
+        issue?: number
     ): Promise<CreatePullRequestResponse> {
         return this.request<CreatePullRequestResponse>(`${this.repoPath}/pulls`, {
             method: 'POST',
