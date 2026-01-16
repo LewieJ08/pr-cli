@@ -39,7 +39,7 @@ program
     .command('create')
     .description('Create a pull request')
     .option('-d, --draft', 'Create a draft pull request')
-    .option('-i, --issue [issue-number]', 'Convert an issue to a pull request')
+    .option('-i, --issue <issue-number>', 'Convert an issue to a pull request')
     .helpGroup(coreGroup)
     .action((options: CreateOptions) => {
         createCommand(options);
