@@ -77,11 +77,11 @@ export class GithubService {
 
     // Create a pull request
     public createPullRequest(
-        title: string | null,
-        body: string | null,
+        title: string,
+        body: string,
         head: string,
         base: string,
-        draft?: boolean,
+        draft: boolean,
         issue?: number
     ): Promise<CreatePullRequestResponse> {
         return this.request<CreatePullRequestResponse>(`${this.repoPath}/pulls`, {

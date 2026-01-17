@@ -12,9 +12,6 @@ export interface CreateOptions {
 
 export async function createCommand(options: CreateOptions): Promise<void> {
     try {
-        const issueText = options.issue ? 
-            ' (Leave blank to use Title/Body of selected issue)' : '';
-
         const context = resolveGitContext();
         const token = resolveGithubToken();
         
@@ -25,14 +22,8 @@ export async function createCommand(options: CreateOptions): Promise<void> {
         });
 
         const repo = await github.getRepository();
-        const rawTitle = await prompt(`PR Title${issueText} >`); 
-        const rawBody = await prompt(`PR Body${issueText} > `);
-
-        const title =
-            options.issue && rawTitle.trim() === '' ? null : rawTitle;
-
-        const body =
-            options.issue && rawBody.trim() === '' ? null : rawBody;
+        const title = await prompt(`PR Title > `);
+        const body = await prompt(`PR Body > `);
 
         const created = await github.createPullRequest(
             title, 
@@ -44,7 +35,7 @@ export async function createCommand(options: CreateOptions): Promise<void> {
         );
 
         if (!created) {
-            throw new Error('Unable to create pull request. Remember to push your changes\nIf this does not work please refer to docs');
+            throw new Error('Unable to create pull request. Remember to push your changes\nIf this does not work please refer to docs')
         }
 
         logSuccess(`\nPull Request #${created.number} for '${repo.name}' created successfully`);
