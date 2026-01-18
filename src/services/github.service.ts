@@ -77,8 +77,8 @@ export class GithubService {
 
     // Create a pull request
     public createPullRequest(
-        title: string,
-        body: string,
+        title: string | undefined,
+        body: string | undefined,
         head: string,
         base: string,
         draft: boolean,
