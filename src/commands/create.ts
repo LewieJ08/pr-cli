@@ -7,9 +7,12 @@ import { logError, logSuccess } from "../utils/logger.utils.js";
 
 export interface CreateOptions { 
     draft: boolean;
+    issue?: number;
 }
 
 export async function createCommand(options: CreateOptions): Promise<void> {
+    const useIssue = options.issue !== undefined;
+    
     try {
         const context = resolveGitContext();
         const token = resolveGithubToken();
@@ -21,15 +24,16 @@ export async function createCommand(options: CreateOptions): Promise<void> {
         });
 
         const repo = await github.getRepository();
-        const title = await prompt('PR Title > ');
-        const body = await prompt('PR Body > ');
+        const title = useIssue ? undefined : await prompt('PR Title > ');
+        const body  = useIssue ? undefined : await prompt('PR Body > ');
 
         const created = await github.createPullRequest(
             title, 
             body, 
             context.head,
             repo.default_branch,
-            options.draft
+            options.draft,
+            options.issue
         );
 
         if (!created) {
@@ -53,6 +57,8 @@ export async function createCommand(options: CreateOptions): Promise<void> {
             if (error.message === '422') {
                 logError('Unable to create pull request. Ensure to push recent changes.');
                 logError('You cannot create a pull request if there is one already open on the current branch');
+            } else {
+                logError(error.message);
             }
             process.exit(1);
         }

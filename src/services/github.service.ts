@@ -77,16 +77,17 @@ export class GithubService {
 
     // Create a pull request
     public createPullRequest(
-        title: string,
-        body: string,
+        title: string | undefined,
+        body: string | undefined,
         head: string,
         base: string,
         draft: boolean,
+        issue?: number
     ): Promise<CreatePullRequestResponse> {
         return this.request<CreatePullRequestResponse>(`${this.repoPath}/pulls`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({ title, body, head, base, draft })
+            body: JSON.stringify({ title, body, head, base, draft, issue })
         })  
     }
 

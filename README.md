@@ -143,6 +143,10 @@ Create a pull request. When using this command you will be asked to provide the 
 
 Create a draft pull request
 
+```-i --issue <issue-number>```
+
+An issue in the repository to convert to a pull request. The issue title, body, and comments will become the title, body, and comments on the new pull request unless title is given by user.
+
 #### Example usage
 ```bash
 > pr create 
