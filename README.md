@@ -145,7 +145,7 @@ Create a draft pull request
 
 ```-i --issue <issue-number>```
 
-An issue in the repository to convert to a pull request. The issue title, body, and comments will become the title, body, and comments on the new pull request unless title is given by user.
+An issue in the repository to convert to a pull request. The issue title, body, and comments will become the title, body, and comments on the new pull request.
 
 #### Example usage
 ```bash
