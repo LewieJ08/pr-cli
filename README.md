@@ -40,7 +40,8 @@ In order to use **pr-cli** you will need a Github Token. If you do not have a Gi
 https://github.com/settings/personal-access-tokens
 
 Ensure you have these permissions:
-![Github Perms](/docs/perms.png) 
+
+![Read and Write for Pull Requests, Issues and Contents](/docs/perms.png) 
 
 
 ## Installation
