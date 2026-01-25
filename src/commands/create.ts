@@ -8,6 +8,7 @@ import { logError, logSuccess } from "../utils/logger.utils.js";
 export interface CreateOptions { 
     draft: boolean;
     issue?: number;
+    base?: string;
 }
 
 export async function createCommand(options: CreateOptions): Promise<void> {
@@ -31,7 +32,7 @@ export async function createCommand(options: CreateOptions): Promise<void> {
             title, 
             body, 
             context.head,
-            repo.default_branch,
+            options.base || repo.default_branch,
             options.draft,
             options.issue
         );
