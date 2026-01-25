@@ -148,6 +148,10 @@ Create a draft pull request
 
 An issue in the repository to convert to a pull request. The issue title, body, and comments will become the title, body, and comments on the new pull request.
 
+```-b --base <base>```
+
+Branch that pull request wants to be merged into. Defaults to main branch if option not provided.
+
 #### Example usage
 ```bash
 > pr create 
