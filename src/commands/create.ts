@@ -62,7 +62,7 @@ export async function createCommand(options: CreateOptions): Promise<void> {
                     break;
                 case '403':
                     logError('Access Denied, Your token type/settings may not be allowed for target repo owner/org');
-                    logError('Most organisation, do not allow tokens with a expire time longer than 366 days');
+                    logError('Most organisations do not allow tokens with a expire time longer than 366 days');
                     break;
                 default:
                     logError(error.message);
