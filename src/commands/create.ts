@@ -55,11 +55,18 @@ export async function createCommand(options: CreateOptions): Promise<void> {
         }
 
         if (error instanceof Error) {
-            if (error.message === '422') {
-                logError('Unable to create pull request. Ensure to push recent changes.');
-                logError('You cannot create a pull request if there is one already open on the current branch');
-            } else {
-                logError(error.message);
+            switch (error.message) {
+                case '422':
+                    logError('Unable to create pull request. Ensure to push recent changes.');
+                    logError('You cannot create a pull request if there is one already open on the current branch');
+                    break;
+                case '403':
+                    logError('Access Denied, Your token type/settings may not be allowed for target repo owner/org');
+                    logError('Most organisations do not allow tokens with a expire time longer than 366 days');
+                    break;
+                default:
+                    logError(error.message);
+                    break
             }
             process.exit(1);
         }
