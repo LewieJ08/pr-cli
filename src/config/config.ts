@@ -2,7 +2,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { homedir } from "os";
 import { validateGithubToken, TokenValidationResult } from "../utils/git.utils.js";
 
-const CONFIG_DIR = `${homedir()}/.config/pr-cli/`;
+const CONFIG_DIR = `${homedir()}/.config/pr-cli`;
 const CONFIG_FILE = `${CONFIG_DIR}/config.json`
 
 export function loadConfig(): string | null { 
@@ -11,7 +11,7 @@ export function loadConfig(): string | null {
     }
 
     const configData = JSON.parse(readFileSync(CONFIG_FILE, 'utf-8'));
-    const token: string | null = configData.GITHUB_TOKEN;
+    const token: string | null = configData.githubToken;
 
     if (!token) {
         return null;
