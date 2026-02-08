@@ -13,7 +13,7 @@ GitHub Repo: https://github.com/LewieJ08/pr-cli
 - [Get a pull request](#pr-get)
 - [Update a pull request](#pr-update)
 ### Pull request inspection
-- [List commits on a pull request](#pr-list)
+- [List commits on a pull request](#pr-commits)
 - [List pull requests files](#pr-files)
 - [Check if a pull request has been merged](#pr-status)
 ### Pull request actions
