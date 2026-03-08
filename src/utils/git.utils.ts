@@ -1,6 +1,5 @@
 import { execSync } from "child_process";
-import { resolveGitContext } from "./git-context.utils.js";
-import { GithubService } from "../services/github.service.js";
+import { NoGitRepoError, InvalidRemoteUrlError } from "../errors/errors.js";
 
 interface ParsedUrlItems {
     owner: string;
@@ -13,19 +12,6 @@ export interface TokenValidationResult {
     username?: string;
 }
 
-export class NoGitRepoError extends Error {
-    constructor() {
-        super('pr: Not a git repository');
-        this.name = 'NoGitRepoError';
-    }
-}
-
-export class InvalidRemoteUrlError extends Error {
-    constructor() {
-        super('pr: Invalid Remote Git URL');
-        this.name = 'InvalidRemoteUrlError';
-    }
-}
 
 export function getCurrentBranch(): string {
     try {
