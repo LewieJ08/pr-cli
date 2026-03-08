@@ -1,3 +1,4 @@
+import { TokenExpiredError } from "../errors/errors.js";
 import { PullRequest, User, File, Commit, Repository } from "./github.types.js";
 
 interface CreatePullRequestResponse {
@@ -43,6 +44,10 @@ export class GithubService {
         });
 
         if (mode === 'status') {
+            if (response.status === 401) {
+                throw new TokenExpiredError()
+            }
+            
             return response.status as T;
         }
 
