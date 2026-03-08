@@ -1,7 +1,7 @@
 import { GithubService } from "../services/github.service.js";
 import { resolveGitContext } from "../utils/git-context.utils.js";
 import { resolveGithubToken } from "../config/env.js";
-import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js";
+import { CLIError } from "../errors/errors.js";
 import { logError, logInfo, logSuccess } from "../utils/logger.utils.js";
 import { prompt } from "../utils/prompt.utils.js";
 
@@ -48,14 +48,9 @@ export async function mergeCommand(pullNumber: number, options: MergeOptions): P
         await github.mergePullRequest(pullNumber, options.method);
         logSuccess(`Pull Request #${pullNumber} successfully merged`);
     } catch (error: unknown) {
-        if (error instanceof NoGitRepoError) {
+        if (error instanceof CLIError) {
             logError(error.message);
-            process.exit(1);
-        }
-
-        if (error instanceof InvalidRemoteUrlError) {
-            logError(error.message);
-            process.exit(1);
+            process.exit(error.exitCode);
         }
 
         if (error instanceof Error) {

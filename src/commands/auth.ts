@@ -1,5 +1,5 @@
 import { saveConfig, clearConfig } from "../config/config.js"
-import { NoGitRepoError, InvalidRemoteUrlError } from "../utils/git.utils.js"; 
+import { CLIError } from "../errors/errors.js"; 
 import { logError, logSuccess, logInfo } from "../utils/logger.utils.js";
 import { prompt } from "../utils/prompt.utils.js";
 
@@ -18,14 +18,9 @@ export async function authCommand(options: AuthOptions) {
             logSuccess(`Github token for user '${tokenData.username}' authenticated successfully`);
         }
     } catch (error: unknown) {
-        if (error instanceof NoGitRepoError) {
+        if (error instanceof CLIError) {
             logError(error.message);
-            process.exit(1);
-        }
-
-        if (error instanceof InvalidRemoteUrlError) {
-            logError(error.message);
-            process.exit(1);
+            process.exit(error.exitCode);
         }
 
         if (error instanceof Error) {
