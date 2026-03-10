@@ -19,7 +19,7 @@ const program = new Command('pr');
 // Core pull request operations
 program 
     .description('A cli tool that allows users to create and manage pull requests')
-    .version('1.0.4')
+    .version('1.4.0')
     .action(() => {
         program.outputHelp();
     })
@@ -119,6 +119,7 @@ program
     .command('auth')
     .description('Authenticate GitHub Token (Required)')
     .helpGroup('Authentication / Login')
+    .option('-s, --status', 'Check authentication status')
     .option('-d, --delete', 'Delete GitHub token from config')
     .action((options: AuthOptions) => {
         authCommand(options);
